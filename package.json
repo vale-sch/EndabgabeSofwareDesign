@@ -2,12 +2,14 @@
   "name": "quizapp",
   "version": "1.0.0",
   "description": "",
-  "main": "build/main.js",
+  "main": "build/VaccineMain.js",
   "nodemonConfig": {
-    "ignore": ["*.json"]
- },
+    "ignore": [
+      "*.json"
+    ]
+  },
   "scripts": {
-    "VA": "nodemon build/main.js"
+    "VA": "nodemon build/VaccineMain.js"
   },
   "keywords": [],
   "author": "",
@@ -20,10 +22,12 @@
     "@types/node": "^14.14.44",
     "@types/uuid": "^8.3.0",
     "@types/webpack": "^4.41.28",
+    "colors": "^1.4.0",
+    "colors.ts": "^1.0.20",
     "lodash": "^4.17.21",
     "ts-loader": "^8.2.0",
     "ts-node": "^9.0.0",
-    "ts-node-dev": "^1.1.6",
+    "ts-node-dev": "^1.1.8",
     "tslint": "^6.1.3",
     "typescript": "^4.2.4",
     "uuid": "^8.3.2",
