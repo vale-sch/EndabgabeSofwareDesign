@@ -6,8 +6,9 @@ export class Administrator {
     public static password: string = "password";
 
     public async showAdminMethods(): Promise<void> {
-        ConsoleHandling.consoleLine.write("Hello Admin!" + " \n");
-        let answer: String = await ConsoleHandling.showPossibilities(["1. Create new Vaccination Day", "2. Get the Day Overview", "3. Get the percantage of open and booked Vaccinations", "4. Get the free clock times", "5. Get complete Statistics", "6. Quit"], "Which function do you want to use? (1): ");
+        // Davor muss hier noch das password und username abgefragt werden!
+        ConsoleHandling.consoleLine.write("Hello Admin!".color_at_256(195));
+        let answer: String = await ConsoleHandling.showPossibilities(["1. Create new Vaccination Day", "2. Get the Day Overview", "3. Get the percantage of open and booked Vaccinations", "4. Get the free clock times", "5. Get complete Statistics", "6. Quit"], "Which function do you want to use?(" + "1".color_at_256(118) + "): ");
         this.handleAnswer(answer);
     }
 
