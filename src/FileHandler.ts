@@ -1,6 +1,6 @@
-import {readFileSync} from "fs";
-import {writeFileSync} from "fs";
-import {resolve} from "path";
+import { readFileSync } from "fs";
+import { writeFileSync } from "fs";
+import { resolve } from "path";
 
 export class FileHandler {
     private static _instance: FileHandler = new FileHandler();
@@ -25,14 +25,14 @@ export class FileHandler {
     public writeFile(pathToFile: string, dataToWrite: any): void {
         writeFileSync(resolve(__dirname, "../" + pathToFile), JSON.stringify(dataToWrite));
     }
-    
+
     private readFile(pathToFile: string): any {
         let jsonRaw = readFileSync(resolve(__dirname, "../" + pathToFile));
         let json: any = JSON.parse(jsonRaw.toString());
         return json;
     }
 
- 
+
 }
 
 export default FileHandler.getInstance();

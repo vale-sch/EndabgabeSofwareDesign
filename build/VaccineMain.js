@@ -6,13 +6,10 @@ const administrator_1 = require("./administrator");
 const Colors = require("colors.ts");
 startApp();
 async function startApp() {
-    ConsoleHandling_1.default.consoleLine.write(" \n");
     Colors.enable();
-    ConsoleHandling_1.default.consoleLine.write("Welcome to our Vaccinee App!".color_at_256(195) + "\n\n" + "Do you want an Vaccination Appointment?".color_at_256(226));
-    ConsoleHandling_1.default.consoleLine.write(" \n");
-    let answer = await ConsoleHandling_1.default.question("Press " + "Y".color_at_256(118) + " to Continue, or " + "Z".color_at_256(160) + " to quit (" + "Y".color_at_256(118) + "): ");
+    ConsoleHandling_1.default.printInput("Welcome to our Vaccinee App!".color_at_256(195) + "\n\n" + "Do you want an Vaccination Appointment?".color_at_256(226));
+    let answer = await ConsoleHandling_1.default.question("Press " + "Y".color_at_256(118) + " to Continue, or " + "Z".color_at_256(196) + " to quit (" + "Y".color_at_256(118) + "): ");
     let vaccinee = new Vaccinee_1.Vaccinee();
-    ConsoleHandling_1.default.consoleLine.write("\n");
     switch (answer.toLowerCase()) {
         case "y":
             vaccinee.showVaccineeMethods();
@@ -24,6 +21,7 @@ async function startApp() {
             vaccinee = null;
             const admin = new administrator_1.Administrator();
             admin.showAdminMethods();
+            //admin.adminLogin();
             break;
         default:
             vaccinee.showVaccineeMethods();

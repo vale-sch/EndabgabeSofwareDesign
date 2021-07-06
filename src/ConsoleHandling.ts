@@ -5,7 +5,7 @@ class ConsoleHandling {
 
   // logger object with syslog levels as specified loglevels
   // logs into build_service.log in directory log and onto console of running node.js process
-  public consoleLine: readline.ReadLine = readline.createInterface({
+  private consoleLine: readline.ReadLine = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   });
@@ -14,6 +14,7 @@ class ConsoleHandling {
     if (ConsoleHandling._instance)
       throw new Error("Use ConsoleHandling.getInstance() instead new ConsoleHandling()");
     ConsoleHandling._instance = this;
+
   }
 
   public static getInstance(): ConsoleHandling {
@@ -26,12 +27,14 @@ class ConsoleHandling {
       this.consoleLine.question(question.toString(), (_answer: string) => {
         resolve(_answer);
       });
+
     });
+
   }
 
   public showPossibilities(showPossibilities: String[], question: String): Promise<String> {
-    this.consoleLine.write("\n\n");
-    this.consoleLine.write("What do you want me to do?: ".color_at_256(226));
+    this.consoleLine.write("\n");
+    this.consoleLine.write("What do you want me to do? ".color_at_256(226));
     this.consoleLine.write("\n");
     for (let possibility of showPossibilities) {
       this.consoleLine.write(possibility.toString());
@@ -42,9 +45,11 @@ class ConsoleHandling {
     return new Promise((resolve) => this.consoleLine.question(question.toString(), (answer: string) => {
       resolve(answer);
     }));
+
   }
 
   public printInput(input: string): void {
+    this.consoleLine.write("\n");
     this.consoleLine.write(input);
     this.consoleLine.write("\n");
   }

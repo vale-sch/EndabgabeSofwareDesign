@@ -5,6 +5,7 @@ const fs_1 = require("fs");
 const fs_2 = require("fs");
 const path_1 = require("path");
 class FileHandler {
+    static _instance = new FileHandler();
     constructor() {
         if (FileHandler._instance)
             throw new Error("Use FileHandler.getInstance() instead new FileHandler()");
@@ -29,6 +30,5 @@ class FileHandler {
     }
 }
 exports.FileHandler = FileHandler;
-FileHandler._instance = new FileHandler();
 exports.default = FileHandler.getInstance();
 //# sourceMappingURL=FileHandler.js.map

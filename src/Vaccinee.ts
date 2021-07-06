@@ -2,8 +2,8 @@ import ConsoleHandling from "./ConsoleHandling";
 
 export class Vaccinee {
   public async showVaccineeMethods(): Promise<void> {
-    ConsoleHandling.consoleLine.write("Hello Vaccinee!".color_at_256(195))
-    let answer: String = await ConsoleHandling.showPossibilities(["1. Show Open Events for Vaccination", "2. Search for specific Date", "3. QuitApp"], "Which function do you want to use?(" + "1".color_at_256(118) + "): ");
+    ConsoleHandling.printInput("Hello Vaccinee!".color_at_256(195))
+    let answer: String = await ConsoleHandling.showPossibilities(["1. Show Open Events for Vaccination", "2. Search for specific Date", "3. Quit"], "Which " + "function".color_at_256(226) + " do you want me to use? (" + "1".color_at_256(226) + "): ");
 
 
     this.handleAnswer(answer);
