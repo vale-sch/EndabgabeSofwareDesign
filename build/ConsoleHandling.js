@@ -38,7 +38,6 @@ class ConsoleHandling {
         }));
     }
     printInput(input) {
-        this.consoleLine.write("\n");
         this.consoleLine.write(input);
         this.consoleLine.write("\n");
     }

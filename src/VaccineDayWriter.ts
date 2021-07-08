@@ -1,35 +1,38 @@
 import { Administrator } from "./Administrator";
 import ConsoleHandling from "./ConsoleHandling";
 import FileHandler from "./FileHandler";
-import { VaccineDay } from "./VaccineDay";
-import { VaccineEventStructur } from "./VaccineEventStructure";
+import { CalculatedVaccineDay } from "./CalculatedVaccineDay";
+import { VaccineAppointmentStructur } from "./VaccineAppointmentStructure";
 
 
 
 export class VaccineDayWriter {
     public dateString: String;
+    public dateInNumbers: number[];
     public periodFrom: number[];
     public periodTo: number[];
     public parallelyVaccines: number;
     public timeBetweeenVaccines: number;
     public admin: Administrator;
-    constructor(_dateString: String, _periodFrom: number[], _periodTo: number[], _parallelyVaccines: number, _timeBetweeenVaccines: number, _admin: Administrator) {
+    constructor(_dateString: String, _dateInNumbers: number[], _periodFrom: number[], _periodTo: number[], _parallelyVaccines: number, _timeBetweeenVaccines: number, _admin: Administrator) {
         this.dateString = _dateString;
         this.periodFrom = _periodFrom;
         this.periodTo = _periodTo;
         this.parallelyVaccines = _parallelyVaccines;
         this.timeBetweeenVaccines = _timeBetweeenVaccines;
         this.admin = _admin;
-        this.calculateEvents();
+        this.calculateAppointmentAmount();
 
     }
-    public calculateEvents(): void {
+    public calculateAppointmentAmount(): void {
         let hoursBegin: number = this.periodFrom[0];
         let minutesBegin: number = this.periodFrom[1];
 
         let hoursStop: number = this.periodTo[0];
         let minutesStop: number = this.periodTo[1];
+
         let timeDifference: number = Math.abs(hoursBegin - hoursStop) * 60;
+
         if ((hoursBegin - hoursStop) >= 0) {
             if (minutesBegin - minutesStop >= 0 || (hoursBegin - hoursStop) > 0) {
                 ConsoleHandling.printInput("dude you going backward - wrong period input".color_at_256(196) + "\n");
@@ -41,48 +44,54 @@ export class VaccineDayWriter {
             timeDifference += Math.abs(minutesBegin - minutesStop);
         else
             timeDifference -= Math.abs(minutesBegin - minutesStop);
-        let eventAmount: number = Math.round((timeDifference / this.timeBetweeenVaccines) * this.parallelyVaccines);
 
-        let vaccineEventStructure: VaccineEventStructur[] = new Array(Math.round(timeDifference / this.timeBetweeenVaccines));
+        let eventAmount: number = Math.round((timeDifference / this.timeBetweeenVaccines) * this.parallelyVaccines);
+        let vaccineAppointmentStructure: VaccineAppointmentStructur[] = new Array(Math.round(timeDifference / this.timeBetweeenVaccines));
+        this.createAppointmentStructure(eventAmount, minutesBegin, hoursBegin, vaccineAppointmentStructure);
+    }
+
+    public createAppointmentStructure(_eventAmount: number, _minutesBegin: number, _hoursBegin: number, _vaccineAppointmentStructure: VaccineAppointmentStructur[]): void {
         let modoloNumber: number = this.parallelyVaccines;
         let oldModuloNumber: number = 1;
         let eventCounterModulo: number = 1;
-
-        for (let eventCounter: number = 1; eventCounter <= eventAmount; eventCounter++) {
+        let hoursAfter: number = _hoursBegin;
+        let minAfter: number = _minutesBegin;
+        for (let eventCounter: number = 1; eventCounter <= _eventAmount; eventCounter++) {
             if (eventCounter % this.parallelyVaccines == 0) {
-
-                if (minutesBegin != 0)
-                    if (minutesBegin % 60 == 0) {
-                        hoursBegin++;
-                        minutesBegin = 0;
+                minAfter += this.timeBetweeenVaccines;
+                if (minAfter != 0)
+                    if (minAfter % 60 == 0) {
+                        hoursAfter++;
+                        minAfter = 0;
                     }
-                vaccineEventStructure[eventCounterModulo] = new VaccineEventStructur(this.dateString, new Array(oldModuloNumber, modoloNumber), new Array(hoursBegin, minutesBegin), new Array(hoursBegin, minutesBegin + this.timeBetweeenVaccines), new Array(this.parallelyVaccines).fill(true));
-                minutesBegin += this.timeBetweeenVaccines;
+                _vaccineAppointmentStructure[eventCounterModulo] = new VaccineAppointmentStructur(this.dateString, new Array(oldModuloNumber, modoloNumber),
+                    // tslint:disable-next-line: align
+                    new Array(_hoursBegin, _minutesBegin), new Array(hoursAfter, minAfter), new Array(this.parallelyVaccines).fill(false));
+                _minutesBegin = minAfter;
+                _hoursBegin = hoursAfter;
                 eventCounterModulo++;
                 oldModuloNumber = modoloNumber + 1;
                 modoloNumber += this.parallelyVaccines;
             }
         }
-
-        vaccineEventStructure.shift();
+        _vaccineAppointmentStructure.shift();
         let uniqueNumber: number = Math.round(Date.now() + Math.random());
+        let newCalculatedVaccineDay: CalculatedVaccineDay = new CalculatedVaccineDay(this.dateString, this.dateInNumbers, uniqueNumber, this.periodFrom, this.periodTo, this.parallelyVaccines, this.timeBetweeenVaccines, _eventAmount, _vaccineAppointmentStructure);
 
-        // tslint:disable-next-line: no-any
-        let newStructuredVaccineDay: VaccineDay = new VaccineDay(this.dateString, uniqueNumber, this.periodFrom, this.periodTo, this.parallelyVaccines, this.timeBetweeenVaccines, eventAmount, vaccineEventStructure);
+        this.writeNewDay(newCalculatedVaccineDay);
+    }
 
-        // tslint:disable-next-line: no-any
+    public writeNewDay(_newCalculatedVaccineDay: CalculatedVaccineDay): void {
         try {
             FileHandler.readArrayFile("/data/vaccineDaysDB.json");
         } catch (error) {
             console.log("building JSON for first time...");
             FileHandler.writeFile("/data/vaccineDaysDB.json", []);
         }
-
-        // tslint:disable-next-line: no-any
-        let vaccineDays: VaccineDay[] = FileHandler.readArrayFile("/data/vaccineDaysDB.json");
-
-        vaccineDays.push(newStructuredVaccineDay);
+        let vaccineDays: CalculatedVaccineDay[] = FileHandler.readArrayFile("/data/vaccineDaysDB.json");
+        vaccineDays.push(_newCalculatedVaccineDay);
         FileHandler.writeFile("/data/vaccineDaysDB.json", vaccineDays);
+
         ConsoleHandling.printInput("you have succesfully created a new vaccine day!".color_at_256(118));
         this.admin.goBack();
     }

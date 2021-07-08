@@ -26,6 +26,8 @@ class Vaccinee {
         if (!wantClose)
             await this.goNext();
     }
+    // public getOpenAppointmentsOnSpecificDate(): void {
+    // }
     async goNext() {
         let answer = await ConsoleHandling_1.default.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) + " to quit (" + "Y".color_at_256(118) + "): ");
         switch (answer.toLowerCase()) {
