@@ -7,8 +7,8 @@ const Colors = require("colors.ts");
 startApp();
 async function startApp() {
     Colors.enable();
-    ConsoleHandling_1.default.printInput("Welcome to our Vaccinee App!".color_at_256(195) + "\n\n" + "Do you want an Vaccination Appointment?".color_at_256(226));
-    let answer = await ConsoleHandling_1.default.question("Press " + "Y".color_at_256(118) + " to Continue, or " + "Z".color_at_256(196) + " to quit (" + "Y".color_at_256(118) + "): ");
+    ConsoleHandling_1.default.printInput("welcome to our vaccinee app!".color_at_256(195) + "\n\n" + "do you want an vaccination appointment?".color_at_256(226));
+    let answer = await ConsoleHandling_1.default.question("press " + "Y".color_at_256(118) + " to Continue, or " + "Z".color_at_256(196) + " to quit (" + "Y".color_at_256(118) + "): ");
     let vaccinee = new Vaccinee_1.Vaccinee();
     switch (answer.toLowerCase()) {
         case "y":

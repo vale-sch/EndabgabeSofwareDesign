@@ -1,13 +1,15 @@
 import ConsoleHandling from "./ConsoleHandling";
 
 export class Vaccinee {
+
   public async showVaccineeMethods(): Promise<void> {
-    ConsoleHandling.printInput("Hello Vaccinee!".color_at_256(195))
-    let answer: String = await ConsoleHandling.showPossibilities(["1. Show Open Events for Vaccination", "2. Search for specific Date", "3. Quit"], "Which " + "function".color_at_256(226) + " do you want me to use? (" + "1".color_at_256(226) + "): ");
-
-
+    ConsoleHandling.printInput("hello Vaccinee!".color_at_256(195));
+    let answer: String = await ConsoleHandling.showPossibilities(["1. show Open Events for Vaccination", "2. search for specific Date", "3. quit"],
+      // tslint:disable-next-line: align
+      "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
     this.handleAnswer(answer);
   }
+
   public async handleAnswer(answer: String): Promise<void> {
     let wantClose: boolean = false;
     switch (answer) {
@@ -24,16 +26,15 @@ export class Vaccinee {
     if (!wantClose)
       await this.goNext();
   }
+
   public async goNext(): Promise<void> {
-    let answer: String = await ConsoleHandling.question("Back to overview? ");
+    let answer: String = await ConsoleHandling.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) + " to quit (" + "Y".color_at_256(118) + "): ");
     switch (answer.toLowerCase()) {
       case "y":
-      case "yes":
       default:
         this.showVaccineeMethods();
         break;
-      case "n":
-      case "no":
+      case "z":
         ConsoleHandling.closeConsole();
         break;
     }

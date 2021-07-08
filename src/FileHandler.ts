@@ -23,7 +23,7 @@ export class FileHandler {
     }
 
     public writeFile(pathToFile: string, dataToWrite: any): void {
-        writeFileSync(resolve(__dirname, "../" + pathToFile), JSON.stringify(dataToWrite));
+        writeFileSync(resolve(__dirname, "../" + pathToFile), JSON.stringify(dataToWrite, null, 4));
     }
 
     private readFile(pathToFile: string): any {
