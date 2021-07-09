@@ -1,0 +1,1 @@
+{"version":3,"file":"StillOpenDays.js","sourceRoot":"","sources":["../src/StillOpenDays.ts"],"names":[],"mappings":";;;AAAA,MAAa,aAAa;IACf,QAAQ,CAAS;IACjB,SAAS,CAAW;IAC3B,YAAY,UAAkB,EAAE,UAAoB;QAChD,IAAI,CAAC,QAAQ,GAAG,UAAU,CAAC;QAC3B,IAAI,CAAC,SAAS,GAAG,UAAU,CAAC;IAChC,CAAC;CACJ;AAPD,sCAOC"}

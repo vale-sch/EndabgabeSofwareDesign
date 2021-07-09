@@ -114,7 +114,7 @@ export class Administrator {
                 this.goBack();
                 return;
             } else {
-                let answer: String = await ConsoleHandling.showPossibilities(["1. show percantage of day statistics", "2. show free appointments on this day", "3. quit"],
+                let answer: String = await ConsoleHandling.showPossibilities(["1. show percantage of day statistics", "2. show free appointments on this day", "3. go back"],
                     // tslint:disable-next-line: align
                     "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
                 switch (answer) {
@@ -126,14 +126,14 @@ export class Administrator {
                         this.showFreeAppointmentsOfDay(specificVaccineDay);
                         break;
                     case "3":
-                        ConsoleHandling.closeConsole();
+                        this.goBack();
                         break;
                 }
             }
         }
         specificDayRequest = null;
     }
-    public showPercantageOfDay(_specificDay: CalculatedVaccineDay): void {
+    public async showPercantageOfDay(_specificDay: CalculatedVaccineDay): Promise<void> {
         let openAmount: number = 0;
         _specificDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
             vaccineAppointmentRound.freePlaces.forEach(bool => {
@@ -142,14 +142,24 @@ export class Administrator {
             });
         });
         let bookedAmount: number = _specificDay.totalAmountOfVaccines - openAmount;
-
-        ConsoleHandling.printInput("booked Vaccination: ".color_at_256(196) + ((bookedAmount / _specificDay.totalAmountOfVaccines) * 100).toString().color_at_256(196) +
+        ConsoleHandling.printInput("booked Vaccination: ".color_at_256(196) + ((bookedAmount / _specificDay.totalAmountOfVaccines) * 100).toFixed(2).toString().color_at_256(196) +
             "%".color_at_256(196) + "\n" + "still free vaccination appointments: ".color_at_256(118) +
-            ((openAmount / _specificDay.totalAmountOfVaccines) * 100).toString().color_at_256(118) + "%".color_at_256(118));
-
+            ((openAmount / _specificDay.totalAmountOfVaccines) * 100).toFixed(2).toString().color_at_256(118) + "%".color_at_256(118));
+        let answer: String = await ConsoleHandling.showPossibilities(["1. show free appointments on this day" + "(" + _specificDay.dateString.color_at_256(196) + ")", "2. go back"],
+            // tslint:disable-next-line: align
+            "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
+        switch (answer) {
+            default:
+            case "1":
+                this.showFreeAppointmentsOfDay(_specificDay);
+                break;
+            case "2":
+                this.goBack();
+                break;
+        }
     }
 
-    public showFreeAppointmentsOfDay(_specificDay: CalculatedVaccineDay): void {
+    public async showFreeAppointmentsOfDay(_specificDay: CalculatedVaccineDay): Promise<void> {
         ConsoleHandling.printInput("date: ".color_at_256(226) + _specificDay.dateString.color_at_256(51) + ", ".color_at_256(226) +
             "  time between vaccines on this day: ".color_at_256(226) + _specificDay.timeBetweenVaccines.toString().color_at_256(51));
         ConsoleHandling.printInput("verfification number: ".color_at_256(226) + _specificDay.verficationDayNumber.toString().color_at_256(51) +
@@ -166,11 +176,23 @@ export class Administrator {
             else
                 ConsoleHandling.printInput(vaccineAppointmentRound.start.toString() + "  (" + counterOfOpenAppointments.toString().color_at_256(196) + ")");
         });
+        let answer: String = await ConsoleHandling.showPossibilities(["1. show percantage of day" + "(" + _specificDay.dateString.color_at_256(196) + ")" + " statistics", "2. go back"],
+            // tslint:disable-next-line: align
+            "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
+        switch (answer) {
+            default:
+            case "1":
+                this.showPercantageOfDay(_specificDay);
+                break;
+            case "2":
+                this.goBack();
+                break;
+        }
     }
 
     public async showStatisticsMenu(): Promise<void> {
         let answer: String = await ConsoleHandling.showPossibilities(["1. show statistics for all days and how many appointments are still open",
-            "2. show free appointments in the past", "3. show free appointments in the future", "4. Quit"],
+            "2. show free appointments in the past", "3. show free appointments in the future", "4. go back"],
             // tslint:disable-next-line: align
             "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
         switch (answer) {
@@ -185,7 +207,7 @@ export class Administrator {
                 this.getFreeEvents(false);
                 break;
             case "4":
-                ConsoleHandling.closeConsole();
+                this.goBack();
                 break;
         }
     }
@@ -211,7 +233,7 @@ export class Administrator {
             ConsoleHandling.printInput("Booked Vaccination: ".color_at_256(196) + ((bookedAmount / wholeAmount) * 100).toString().color_at_256(196) +
                 "%".color_at_256(196) + "\n" + "Still free Vaccination Events: ".color_at_256(118) + ((stillFreeAmount / wholeAmount) * 100).toString().color_at_256(118) + "%".color_at_256(118));
             ConsoleHandling.printInput("");
-            this.goBack();
+            this.showStatisticsMenu();
         }
 
     }
@@ -250,7 +272,7 @@ export class Administrator {
                 ConsoleHandling.printInput(openAppointmentsInPast.toString().color_at_256(196) + " appointments which " + "werent booked".color_at_256(196) + " and therefore " + "wasted".color_at_256(196));
             else
                 ConsoleHandling.printInput(openAppointmentsInFuture.toString().color_at_256(118) + " appointments which are " + "open ".color_at_256(118) + "for" + " next appointments".color_at_256(118));
-            this.goBack();
+            this.showStatisticsMenu();
         }
 
     }

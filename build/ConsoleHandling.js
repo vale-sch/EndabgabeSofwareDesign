@@ -26,7 +26,7 @@ class ConsoleHandling {
     }
     showPossibilities(showPossibilities, question) {
         this.consoleLine.write("\n");
-        this.consoleLine.write("what want you do? ".color_at_256(226));
+        this.consoleLine.write("what do you want to do? ".color_at_256(226));
         this.consoleLine.write("\n");
         for (let possibility of showPossibilities) {
             this.consoleLine.write(possibility.toString());

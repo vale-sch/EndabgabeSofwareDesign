@@ -104,7 +104,7 @@ class Administrator {
                 return;
             }
             else {
-                let answer = await ConsoleHandling_1.default.showPossibilities(["1. show percantage of day statistics", "2. show free appointments on this day", "3. quit"], 
+                let answer = await ConsoleHandling_1.default.showPossibilities(["1. show percantage of day statistics", "2. show free appointments on this day", "3. go back"], 
                 // tslint:disable-next-line: align
                 "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
                 switch (answer) {
@@ -116,14 +116,14 @@ class Administrator {
                         this.showFreeAppointmentsOfDay(specificVaccineDay);
                         break;
                     case "3":
-                        ConsoleHandling_1.default.closeConsole();
+                        this.goBack();
                         break;
                 }
             }
         }
         specificDayRequest = null;
     }
-    showPercantageOfDay(_specificDay) {
+    async showPercantageOfDay(_specificDay) {
         let openAmount = 0;
         _specificDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
             vaccineAppointmentRound.freePlaces.forEach(bool => {
@@ -132,11 +132,23 @@ class Administrator {
             });
         });
         let bookedAmount = _specificDay.totalAmountOfVaccines - openAmount;
-        ConsoleHandling_1.default.printInput("booked Vaccination: ".color_at_256(196) + ((bookedAmount / _specificDay.totalAmountOfVaccines) * 100).toString().color_at_256(196) +
+        ConsoleHandling_1.default.printInput("booked Vaccination: ".color_at_256(196) + ((bookedAmount / _specificDay.totalAmountOfVaccines) * 100).toFixed(2).toString().color_at_256(196) +
             "%".color_at_256(196) + "\n" + "still free vaccination appointments: ".color_at_256(118) +
-            ((openAmount / _specificDay.totalAmountOfVaccines) * 100).toString().color_at_256(118) + "%".color_at_256(118));
+            ((openAmount / _specificDay.totalAmountOfVaccines) * 100).toFixed(2).toString().color_at_256(118) + "%".color_at_256(118));
+        let answer = await ConsoleHandling_1.default.showPossibilities(["1. show free appointments on this day" + "(" + _specificDay.dateString.color_at_256(196) + ")", "2. go back"], 
+        // tslint:disable-next-line: align
+        "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
+        switch (answer) {
+            default:
+            case "1":
+                this.showFreeAppointmentsOfDay(_specificDay);
+                break;
+            case "2":
+                this.goBack();
+                break;
+        }
     }
-    showFreeAppointmentsOfDay(_specificDay) {
+    async showFreeAppointmentsOfDay(_specificDay) {
         ConsoleHandling_1.default.printInput("date: ".color_at_256(226) + _specificDay.dateString.color_at_256(51) + ", ".color_at_256(226) +
             "  time between vaccines on this day: ".color_at_256(226) + _specificDay.timeBetweenVaccines.toString().color_at_256(51));
         ConsoleHandling_1.default.printInput("verfification number: ".color_at_256(226) + _specificDay.verficationDayNumber.toString().color_at_256(51) +
@@ -153,10 +165,22 @@ class Administrator {
             else
                 ConsoleHandling_1.default.printInput(vaccineAppointmentRound.start.toString() + "  (" + counterOfOpenAppointments.toString().color_at_256(196) + ")");
         });
+        let answer = await ConsoleHandling_1.default.showPossibilities(["1. show percantage of day" + "(" + _specificDay.dateString.color_at_256(196) + ")" + " statistics", "2. go back"], 
+        // tslint:disable-next-line: align
+        "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
+        switch (answer) {
+            default:
+            case "1":
+                this.showPercantageOfDay(_specificDay);
+                break;
+            case "2":
+                this.goBack();
+                break;
+        }
     }
     async showStatisticsMenu() {
         let answer = await ConsoleHandling_1.default.showPossibilities(["1. show statistics for all days and how many appointments are still open",
-            "2. show free appointments in the past", "3. show free appointments in the future", "4. Quit"], 
+            "2. show free appointments in the past", "3. show free appointments in the future", "4. go back"], 
         // tslint:disable-next-line: align
         "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
         switch (answer) {
@@ -171,7 +195,7 @@ class Administrator {
                 this.getFreeEvents(false);
                 break;
             case "4":
-                ConsoleHandling_1.default.closeConsole();
+                this.goBack();
                 break;
         }
     }
@@ -197,7 +221,7 @@ class Administrator {
             ConsoleHandling_1.default.printInput("Booked Vaccination: ".color_at_256(196) + ((bookedAmount / wholeAmount) * 100).toString().color_at_256(196) +
                 "%".color_at_256(196) + "\n" + "Still free Vaccination Events: ".color_at_256(118) + ((stillFreeAmount / wholeAmount) * 100).toString().color_at_256(118) + "%".color_at_256(118));
             ConsoleHandling_1.default.printInput("");
-            this.goBack();
+            this.showStatisticsMenu();
         }
     }
     getFreeEvents(_isPast) {
@@ -235,7 +259,7 @@ class Administrator {
                 ConsoleHandling_1.default.printInput(openAppointmentsInPast.toString().color_at_256(196) + " appointments which " + "werent booked".color_at_256(196) + " and therefore " + "wasted".color_at_256(196));
             else
                 ConsoleHandling_1.default.printInput(openAppointmentsInFuture.toString().color_at_256(118) + " appointments which are " + "open ".color_at_256(118) + "for" + " next appointments".color_at_256(118));
-            this.goBack();
+            this.showStatisticsMenu();
         }
     }
     enterMemberRole() {
