@@ -5,6 +5,7 @@ const ConsoleHandling_1 = require("./ConsoleHandling");
 const FileHandler_1 = require("./FileHandler");
 const CalculatedVaccineDay_1 = require("./CalculatedVaccineDay");
 const VaccineAppointmentStructure_1 = require("./VaccineAppointmentStructure");
+const VaccineeInformation_1 = require("./VaccineeInformation");
 class VaccineDayWriter {
     dateString;
     dateInNumbers;
@@ -15,6 +16,7 @@ class VaccineDayWriter {
     admin;
     constructor(_dateString, _dateInNumbers, _periodFrom, _periodTo, _parallelyVaccines, _timeBetweeenVaccines, _admin) {
         this.dateString = _dateString;
+        this.dateInNumbers = _dateInNumbers;
         this.periodFrom = _periodFrom;
         this.periodTo = _periodTo;
         this.parallelyVaccines = _parallelyVaccines;
@@ -49,6 +51,9 @@ class VaccineDayWriter {
         let eventCounterModulo = 1;
         let hoursAfter = _hoursBegin;
         let minAfter = _minutesBegin;
+        let emptyVaccineInformations = new Array();
+        for (let i = 0; i < this.parallelyVaccines; i++)
+            emptyVaccineInformations[i] = new VaccineeInformation_1.VaccineeInformation("", "", "", "", "", "");
         for (let eventCounter = 1; eventCounter <= _eventAmount; eventCounter++) {
             if (eventCounter % this.parallelyVaccines == 0) {
                 minAfter += this.timeBetweeenVaccines;
@@ -59,7 +64,7 @@ class VaccineDayWriter {
                     }
                 _vaccineAppointmentStructure[eventCounterModulo] = new VaccineAppointmentStructure_1.VaccineAppointmentStructur(this.dateString, new Array(oldModuloNumber, modoloNumber), 
                 // tslint:disable-next-line: align
-                new Array(_hoursBegin, _minutesBegin), new Array(hoursAfter, minAfter), new Array(this.parallelyVaccines).fill(false));
+                new Array(_hoursBegin, _minutesBegin), new Array(hoursAfter, minAfter), new Array(this.parallelyVaccines).fill(true), emptyVaccineInformations);
                 _minutesBegin = minAfter;
                 _hoursBegin = hoursAfter;
                 eventCounterModulo++;
@@ -69,7 +74,7 @@ class VaccineDayWriter {
         }
         _vaccineAppointmentStructure.shift();
         let uniqueNumber = Math.round(Date.now() + Math.random());
-        let newCalculatedVaccineDay = new CalculatedVaccineDay_1.CalculatedVaccineDay(this.dateString, this.dateInNumbers, uniqueNumber, this.periodFrom, this.periodTo, this.parallelyVaccines, this.timeBetweeenVaccines, _eventAmount, _vaccineAppointmentStructure);
+        let newCalculatedVaccineDay = new CalculatedVaccineDay_1.CalculatedVaccineDay(this.dateString, uniqueNumber, this.parallelyVaccines, this.timeBetweeenVaccines, _eventAmount, this.dateInNumbers, this.periodFrom, this.periodTo, _vaccineAppointmentStructure);
         this.writeNewDay(newCalculatedVaccineDay);
     }
     writeNewDay(_newCalculatedVaccineDay) {

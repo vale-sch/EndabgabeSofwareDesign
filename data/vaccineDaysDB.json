@@ -1,24 +1,29 @@
 [
     {
         "dateString": "2021-12-12",
-        "verficationDayNumber": 1625764386696,
+        "verficationDayNumber": 1625788619469,
+        "parallelyVaccines": 4,
+        "timeBetweenVaccines": 20,
+        "totalAmountOfVaccines": 72,
+        "dateInNumbers": [
+            2021,
+            12,
+            12
+        ],
         "startOfWorkingDay": [
             12,
             0
         ],
         "endOfWorkingDay": [
-            14,
+            18,
             0
         ],
-        "parallelyVaccines": 3,
-        "timeBetweenVaccines": 4,
-        "totalAmountOfVaccines": 90,
         "vaccineAppointmentRound": [
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
                     1,
-                    3
+                    4
                 ],
                 "start": [
                     12,
@@ -26,638 +31,1121 @@
                 ],
                 "end": [
                     12,
-                    4
+                    20
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
-                    4,
-                    6
-                ],
-                "start": [
-                    12,
-                    4
-                ],
-                "end": [
-                    12,
+                    5,
                     8
                 ],
+                "start": [
+                    12,
+                    20
+                ],
+                "end": [
+                    12,
+                    40
+                ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
-                    7,
-                    9
-                ],
-                "start": [
-                    12,
-                    8
-                ],
-                "end": [
-                    12,
-                    12
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    10,
+                    9,
                     12
                 ],
                 "start": [
                     12,
-                    12
+                    40
                 ],
                 "end": [
-                    12,
-                    16
+                    13,
+                    0
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
                     13,
-                    15
-                ],
-                "start": [
-                    12,
                     16
                 ],
+                "start": [
+                    13,
+                    0
+                ],
                 "end": [
-                    12,
+                    13,
                     20
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
-                    16,
-                    18
+                    17,
+                    20
                 ],
                 "start": [
-                    12,
+                    13,
                     20
                 ],
                 "end": [
-                    12,
-                    24
+                    13,
+                    40
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
-                    19,
-                    21
-                ],
-                "start": [
-                    12,
+                    21,
                     24
                 ],
+                "start": [
+                    13,
+                    40
+                ],
                 "end": [
-                    12,
-                    28
+                    14,
+                    0
                 ],
                 "freePlaces": [
                     true,
                     true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    22,
-                    24
-                ],
-                "start": [
-                    12,
-                    28
-                ],
-                "end": [
-                    12,
-                    32
-                ],
-                "freePlaces": [
-                    true,
                     true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
                     25,
-                    27
+                    28
                 ],
                 "start": [
-                    12,
+                    14,
+                    0
+                ],
+                "end": [
+                    14,
+                    20
+                ],
+                "freePlaces": [
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-12-12",
+                "vaccineAppointments": [
+                    29,
                     32
                 ],
-                "end": [
-                    12,
-                    36
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    28,
-                    30
-                ],
                 "start": [
-                    12,
-                    36
+                    14,
+                    20
                 ],
                 "end": [
-                    12,
+                    14,
                     40
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
-                    31,
-                    33
-                ],
-                "start": [
-                    12,
-                    40
-                ],
-                "end": [
-                    12,
-                    44
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    34,
+                    33,
                     36
                 ],
                 "start": [
-                    12,
-                    44
+                    14,
+                    40
                 ],
                 "end": [
-                    12,
-                    48
+                    15,
+                    0
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
                     37,
-                    39
+                    40
                 ],
                 "start": [
-                    12,
+                    15,
+                    0
+                ],
+                "end": [
+                    15,
+                    20
+                ],
+                "freePlaces": [
+                    false,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "vali.vogt@live.de",
+                        "familyName": "vali",
+                        "name": "vogt",
+                        "birth": "12",
+                        "phone": "12",
+                        "adress": "12"
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-12-12",
+                "vaccineAppointments": [
+                    41,
+                    44
+                ],
+                "start": [
+                    15,
+                    20
+                ],
+                "end": [
+                    15,
+                    40
+                ],
+                "freePlaces": [
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-12-12",
+                "vaccineAppointments": [
+                    45,
                     48
                 ],
-                "end": [
-                    12,
-                    52
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    40,
-                    42
-                ],
                 "start": [
-                    12,
-                    52
+                    15,
+                    40
                 ],
                 "end": [
-                    12,
-                    56
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    43,
-                    45
-                ],
-                "start": [
-                    12,
-                    56
-                ],
-                "end": [
-                    13,
+                    16,
                     0
                 ],
                 "freePlaces": [
                     true,
                     true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    46,
-                    48
-                ],
-                "start": [
-                    13,
-                    0
-                ],
-                "end": [
-                    13,
-                    4
-                ],
-                "freePlaces": [
-                    true,
                     true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
                     49,
-                    51
+                    52
                 ],
                 "start": [
-                    13,
-                    4
+                    16,
+                    0
                 ],
                 "end": [
-                    13,
-                    8
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    52,
-                    54
-                ],
-                "start": [
-                    13,
-                    8
-                ],
-                "end": [
-                    13,
-                    12
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    55,
-                    57
-                ],
-                "start": [
-                    13,
-                    12
-                ],
-                "end": [
-                    13,
-                    16
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    58,
-                    60
-                ],
-                "start": [
-                    13,
-                    16
-                ],
-                "end": [
-                    13,
+                    16,
                     20
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-12-12",
+                "vaccineAppointments": [
+                    53,
+                    56
+                ],
+                "start": [
+                    16,
+                    20
+                ],
+                "end": [
+                    16,
+                    40
+                ],
+                "freePlaces": [
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-12-12",
+                "vaccineAppointments": [
+                    57,
+                    60
+                ],
+                "start": [
+                    16,
+                    40
+                ],
+                "end": [
+                    17,
+                    0
+                ],
+                "freePlaces": [
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
                     61,
-                    63
+                    64
                 ],
                 "start": [
-                    13,
+                    17,
+                    0
+                ],
+                "end": [
+                    17,
+                    20
+                ],
+                "freePlaces": [
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-12-12",
+                "vaccineAppointments": [
+                    65,
+                    68
+                ],
+                "start": [
+                    17,
                     20
                 ],
                 "end": [
-                    13,
-                    24
+                    17,
+                    40
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
                 "date": "2021-12-12",
                 "vaccineAppointments": [
-                    64,
-                    66
-                ],
-                "start": [
-                    13,
-                    24
-                ],
-                "end": [
-                    13,
-                    28
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    67,
-                    69
-                ],
-                "start": [
-                    13,
-                    28
-                ],
-                "end": [
-                    13,
-                    32
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    70,
+                    69,
                     72
                 ],
                 "start": [
-                    13,
-                    32
-                ],
-                "end": [
-                    13,
-                    36
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    73,
-                    75
-                ],
-                "start": [
-                    13,
-                    36
-                ],
-                "end": [
-                    13,
-                    40
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    76,
-                    78
-                ],
-                "start": [
-                    13,
+                    17,
                     40
                 ],
                 "end": [
-                    13,
-                    44
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    79,
-                    81
-                ],
-                "start": [
-                    13,
-                    44
-                ],
-                "end": [
-                    13,
-                    48
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    82,
-                    84
-                ],
-                "start": [
-                    13,
-                    48
-                ],
-                "end": [
-                    13,
-                    52
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    85,
-                    87
-                ],
-                "start": [
-                    13,
-                    52
-                ],
-                "end": [
-                    13,
-                    56
-                ],
-                "freePlaces": [
-                    true,
-                    true,
-                    true
-                ]
-            },
-            {
-                "date": "2021-12-12",
-                "vaccineAppointments": [
-                    88,
-                    90
-                ],
-                "start": [
-                    13,
-                    56
-                ],
-                "end": [
-                    14,
+                    18,
                     0
                 ],
                 "freePlaces": [
                     true,
                     true,
+                    true,
                     true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             }
         ]
     },
     {
-        "dateString": "2020-12-12",
-        "verficationDayNumber": 1625764490423,
+        "dateString": "2021-11-11",
+        "verficationDayNumber": 1625788735649,
+        "parallelyVaccines": 4,
+        "timeBetweenVaccines": 5,
+        "totalAmountOfVaccines": 24,
+        "dateInNumbers": [
+            2021,
+            11,
+            11
+        ],
         "startOfWorkingDay": [
             12,
             0
         ],
         "endOfWorkingDay": [
-            14,
-            0
+            12,
+            30
         ],
-        "parallelyVaccines": 5,
-        "timeBetweenVaccines": 10,
-        "totalAmountOfVaccines": 60,
         "vaccineAppointmentRound": [
             {
-                "date": "2020-12-12",
+                "date": "2021-11-11",
                 "vaccineAppointments": [
                     1,
+                    4
+                ],
+                "start": [
+                    12,
+                    0
+                ],
+                "end": [
+                    12,
                     5
                 ],
+                "freePlaces": [
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-11-11",
+                "vaccineAppointments": [
+                    5,
+                    8
+                ],
                 "start": [
                     12,
-                    0
+                    5
                 ],
                 "end": [
                     12,
                     10
                 ],
                 "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             },
             {
-                "date": "2020-12-12",
+                "date": "2021-11-11",
                 "vaccineAppointments": [
-                    6,
-                    10
+                    9,
+                    12
                 ],
                 "start": [
                     12,
@@ -665,234 +1153,212 @@
                 ],
                 "end": [
                     12,
-                    20
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    11,
                     15
                 ],
+                "freePlaces": [
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-11-11",
+                "vaccineAppointments": [
+                    13,
+                    16
+                ],
+                "start": [
+                    12,
+                    15
+                ],
+                "end": [
+                    12,
+                    20
+                ],
+                "freePlaces": [
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
+                ]
+            },
+            {
+                "date": "2021-11-11",
+                "vaccineAppointments": [
+                    17,
+                    20
+                ],
                 "start": [
                     12,
                     20
                 ],
                 "end": [
                     12,
-                    30
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    16,
-                    20
-                ],
-                "start": [
-                    12,
-                    30
-                ],
-                "end": [
-                    12,
-                    40
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    21,
                     25
                 ],
+                "freePlaces": [
+                    false,
+                    false,
+                    false,
+                    false
+                ],
+                "vaccineeInformations": [
+                    {
+                        "email": "peter",
+                        "familyName": "valduslav",
+                        "name": "justus",
+                        "birth": "peters",
+                        "phone": "arsch",
+                        "adress": "lab"
+                    },
+                    {
+                        "email": "1123",
+                        "familyName": "123",
+                        "name": "123",
+                        "birth": "123",
+                        "phone": "123",
+                        "adress": "123"
+                    },
+                    {
+                        "email": "asd",
+                        "familyName": "asd",
+                        "name": "asd",
+                        "birth": "asd",
+                        "phone": "asd",
+                        "adress": "asd"
+                    },
+                    {
+                        "email": "213123",
+                        "familyName": "123",
+                        "name": "12",
+                        "birth": "31",
+                        "phone": "23",
+                        "adress": "123"
+                    }
+                ]
+            },
+            {
+                "date": "2021-11-11",
+                "vaccineAppointments": [
+                    21,
+                    24
+                ],
                 "start": [
                     12,
-                    40
+                    25
                 ],
                 "end": [
                     12,
-                    50
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    26,
-                    30
-                ],
-                "start": [
-                    12,
-                    50
-                ],
-                "end": [
-                    13,
-                    0
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    31,
-                    35
-                ],
-                "start": [
-                    13,
-                    0
-                ],
-                "end": [
-                    13,
-                    10
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    36,
-                    40
-                ],
-                "start": [
-                    13,
-                    10
-                ],
-                "end": [
-                    13,
-                    20
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    41,
-                    45
-                ],
-                "start": [
-                    13,
-                    20
-                ],
-                "end": [
-                    13,
                     30
                 ],
                 "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    46,
-                    50
+                    true,
+                    true,
+                    true,
+                    true
                 ],
-                "start": [
-                    13,
-                    30
-                ],
-                "end": [
-                    13,
-                    40
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    51,
-                    55
-                ],
-                "start": [
-                    13,
-                    40
-                ],
-                "end": [
-                    13,
-                    50
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ]
-            },
-            {
-                "date": "2020-12-12",
-                "vaccineAppointments": [
-                    56,
-                    60
-                ],
-                "start": [
-                    13,
-                    50
-                ],
-                "end": [
-                    14,
-                    0
-                ],
-                "freePlaces": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
+                "vaccineeInformations": [
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    },
+                    {
+                        "email": "",
+                        "familyName": "",
+                        "name": "",
+                        "birth": "",
+                        "phone": "",
+                        "adress": ""
+                    }
                 ]
             }
         ]

@@ -7,12 +7,14 @@ class VaccineAppointmentStructur {
     start;
     end;
     freePlaces;
-    constructor(_date, _vaccineAppointments, _start, _end, _freePlaces) {
+    vaccineeInformations;
+    constructor(_date, _vaccineAppointments, _start, _end, _freePlaces, _vaccineeInformations) {
         this.date = _date;
         this.vaccineAppointments = _vaccineAppointments;
         this.start = _start;
         this.end = _end;
         this.freePlaces = _freePlaces;
+        this.vaccineeInformations = _vaccineeInformations;
     }
 }
 exports.VaccineAppointmentStructur = VaccineAppointmentStructur;
