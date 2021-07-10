@@ -8,14 +8,14 @@ export class CalculatedVaccineDay {
     public timeBetweenVaccines: number;
     public totalAmountOfVaccines: number;
 
-    public dateInNumbers: number[];
-    public startOfWorkingDay: number[];
-    public endOfWorkingDay: number[];
+    public date: number[];
+    public startOfWorkingDay: string;
+    public endOfWorkingDay: string;
 
     public vaccineAppointmentRound: VaccineAppointmentStructure[];
 
     constructor(_dateString: String, _verficationDayNumber: number, _parallelyVaccines: number, _timeBetweenVaccines: number,
-        _totalAmountOfVaccines: number, _dateInNumbers: number[], _startOfWorkingDay: number[], _endOfWorkingDay: number[], _vaccineAppointmentRound: VaccineAppointmentStructure[]) {
+        _totalAmountOfVaccines: number, _dateInNumbers: number[], _startOfWorkingDay: string, _endOfWorkingDay: string, _vaccineAppointmentRound: VaccineAppointmentStructure[]) {
         this.dateString = _dateString;
 
         this.verficationDayNumber = _verficationDayNumber;
@@ -23,7 +23,7 @@ export class CalculatedVaccineDay {
         this.timeBetweenVaccines = _timeBetweenVaccines;
         this.totalAmountOfVaccines = _totalAmountOfVaccines;
 
-        this.dateInNumbers = _dateInNumbers;
+        this.date = _dateInNumbers;
         this.startOfWorkingDay = _startOfWorkingDay;
         this.endOfWorkingDay = _endOfWorkingDay;
 

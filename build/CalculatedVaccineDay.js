@@ -7,7 +7,7 @@ class CalculatedVaccineDay {
     parallelyVaccines;
     timeBetweenVaccines;
     totalAmountOfVaccines;
-    dateInNumbers;
+    date;
     startOfWorkingDay;
     endOfWorkingDay;
     vaccineAppointmentRound;
@@ -17,7 +17,7 @@ class CalculatedVaccineDay {
         this.parallelyVaccines = _parallelyVaccines;
         this.timeBetweenVaccines = _timeBetweenVaccines;
         this.totalAmountOfVaccines = _totalAmountOfVaccines;
-        this.dateInNumbers = _dateInNumbers;
+        this.date = _dateInNumbers;
         this.startOfWorkingDay = _startOfWorkingDay;
         this.endOfWorkingDay = _endOfWorkingDay;
         this.vaccineAppointmentRound = _vaccineAppointmentRound;

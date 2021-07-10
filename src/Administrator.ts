@@ -32,7 +32,7 @@ export class Administrator {
     public async handleAnswer(answer: String): Promise<void> {
         switch (answer) {
             case "1":
-                this.createNewDay();
+                this.getNewDayInformation();
                 break;
             case "2":
                 this.getSpecificDay();
@@ -47,21 +47,21 @@ export class Administrator {
                 ConsoleHandling.closeConsole();
                 break;
             default:
-                this.createNewDay();
+                this.getNewDayInformation();
                 break;
         }
     }
-    public async createNewDay(): Promise<void> {
+    public async getNewDayInformation(): Promise<void> {
         let day: String = await ConsoleHandling.question("what is the " + "date".color_at_256(226) + " of the new vaccine day? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
         //check valid information with regex
         if (!this.checkRegexDate(day))
-            this.createNewDay();
+            this.getNewDayInformation();
 
         if (this.getActualDatabase(this.vaccineDatabase, true)) {
             this.vaccineDatabase.forEach(vaccineDay => {
                 if (vaccineDay.dateString == day) {
                     ConsoleHandling.printInput("date already in database".color_at_256(196));
-                    this.createNewDay();
+                    this.getNewDayInformation();
                 }
             });
         }
@@ -70,16 +70,16 @@ export class Administrator {
         let hourReg: RegExp = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
         if (!period.substring(0, 5).match(hourReg) || !period.substring(6, 11).match(hourReg) || period[5] != "-") {
             ConsoleHandling.printInput("unvalid period format".color_at_256(196));
-            this.createNewDay();
+            this.getNewDayInformation();
         }
 
         let parallelyVaccine: String = await ConsoleHandling.question("how many " + "parallely".color_at_256(226) + " vaccines are possible? " + "(" + "amount".color_at_256(196) + ")" + ": ");
         let intervalsInMinutes: String = await ConsoleHandling.question("how " + "long".color_at_256(226) + " takes one vaccination? " + "(" + "min".color_at_256(196) + ")" + ": ");
 
-        this.convertStrings(day, period, parallelyVaccine, intervalsInMinutes);
+        this.convertStringsAndWriteDay(day, period, parallelyVaccine, intervalsInMinutes);
     }
 
-    public convertStrings(_day: String, _period: String, _parallelyVaccines: String, _intervalsInMinutes: String): void {
+    public convertStringsAndWriteDay(_day: String, _period: String, _parallelyVaccines: String, _intervalsInMinutes: String): void {
         //convert input to numbers
         let dayInNumber: number[] = new Array(parseInt(_day.substring(0, 4)), parseInt(_day.substring(5, 7)), parseInt(_day.substring(8, 10)));
         let periodFromNumber: number[] = new Array(parseInt("" + parseInt(_period[0]) + parseInt(_period[1])), parseInt("" + parseInt(_period[3]) + parseInt(_period[4])));
@@ -142,8 +142,9 @@ export class Administrator {
             });
         });
         let bookedAmount: number = _specificDay.totalAmountOfVaccines - openAmount;
-        ConsoleHandling.printInput("booked Vaccination: ".color_at_256(196) + ((bookedAmount / _specificDay.totalAmountOfVaccines) * 100).toFixed(2).toString().color_at_256(196) +
-            "%".color_at_256(196) + "\n" + "still free vaccination appointments: ".color_at_256(118) +
+        ConsoleHandling.printInput("booked vaccination: ".color_at_256(196) + ((bookedAmount / _specificDay.totalAmountOfVaccines) * 100).toFixed(2).toString().color_at_256(196) +
+            "%".color_at_256(196));
+        ConsoleHandling.printInput("\n" + "still free vaccination appointments: ".color_at_256(118) +
             ((openAmount / _specificDay.totalAmountOfVaccines) * 100).toFixed(2).toString().color_at_256(118) + "%".color_at_256(118));
         let answer: String = await ConsoleHandling.showPossibilities(["1. show free appointments on this day" + "(" + _specificDay.dateString.color_at_256(196) + ")", "2. go back"],
             // tslint:disable-next-line: align
@@ -172,9 +173,9 @@ export class Administrator {
                     counterOfOpenAppointments++;
             });
             if (counterOfOpenAppointments > 0)
-                ConsoleHandling.printInput(vaccineAppointmentRound.start.toString() + "  (" + counterOfOpenAppointments.toString().color_at_256(118) + ")");
+                ConsoleHandling.printInput(vaccineAppointmentRound.startTime + "  (" + counterOfOpenAppointments.toString().color_at_256(118) + ")");
             else
-                ConsoleHandling.printInput(vaccineAppointmentRound.start.toString() + "  (" + counterOfOpenAppointments.toString().color_at_256(196) + ")");
+                ConsoleHandling.printInput(vaccineAppointmentRound.startTime + "  (" + counterOfOpenAppointments.toString().color_at_256(196) + ")");
         });
         let answer: String = await ConsoleHandling.showPossibilities(["1. show percantage of day" + "(" + _specificDay.dateString.color_at_256(196) + ")" + " statistics", "2. go back"],
             // tslint:disable-next-line: align
@@ -207,7 +208,7 @@ export class Administrator {
                 this.getFreeEvents(false);
                 break;
             case "4":
-                this.goBack();
+                this.showAdminMethods();
                 break;
         }
     }
@@ -230,8 +231,8 @@ export class Administrator {
             ConsoleHandling.printInput("");
             ConsoleHandling.printInput("All Vaccinations in Database : ".color_at_256(51) + wholeAmount.toString().color_at_256(51));
             ConsoleHandling.printInput("");
-            ConsoleHandling.printInput("Booked Vaccination: ".color_at_256(196) + ((bookedAmount / wholeAmount) * 100).toString().color_at_256(196) +
-                "%".color_at_256(196) + "\n" + "Still free Vaccination Events: ".color_at_256(118) + ((stillFreeAmount / wholeAmount) * 100).toString().color_at_256(118) + "%".color_at_256(118));
+            ConsoleHandling.printInput("Booked Vaccination: ".color_at_256(196) + ((bookedAmount / wholeAmount) * 100).toFixed(2).toString().color_at_256(196) +
+                "%".color_at_256(196) + "\n" + "Still free Vaccination Events: ".color_at_256(118) + ((stillFreeAmount / wholeAmount) * 100).toFixed(2).toString().color_at_256(118) + "%".color_at_256(118));
             ConsoleHandling.printInput("");
             this.showStatisticsMenu();
         }
@@ -247,23 +248,23 @@ export class Administrator {
         if (this.getActualDatabase(this.vaccineDatabase, false)) {
             this.vaccineDatabase.forEach(vaccineDay => {
                 if (_isPast) {
-                    if (vaccineDay.dateInNumbers[0] < todayInNumbers[0])
+                    if (vaccineDay.date[0] < todayInNumbers[0])
                         openAppointmentsInPast = this.calculateOpenAppointments(vaccineDay, openAppointmentsInPast);
-                    if (vaccineDay.dateInNumbers[0] == todayInNumbers[0]) {
-                        if (vaccineDay.dateInNumbers[1] < todayInNumbers[1])
+                    if (vaccineDay.date[0] == todayInNumbers[0]) {
+                        if (vaccineDay.date[1] < todayInNumbers[1])
                             openAppointmentsInPast = this.calculateOpenAppointments(vaccineDay, openAppointmentsInPast);
-                        if (vaccineDay.dateInNumbers[1] == todayInNumbers[1])
-                            if (vaccineDay.dateInNumbers[2] < todayInNumbers[2])
+                        if (vaccineDay.date[1] == todayInNumbers[1])
+                            if (vaccineDay.date[2] < todayInNumbers[2])
                                 openAppointmentsInPast = this.calculateOpenAppointments(vaccineDay, openAppointmentsInPast);
                     }
                 } else {
-                    if (vaccineDay.dateInNumbers[0] > todayInNumbers[0])
+                    if (vaccineDay.date[0] > todayInNumbers[0])
                         openAppointmentsInFuture = this.calculateOpenAppointments(vaccineDay, openAppointmentsInFuture);
-                    if (vaccineDay.dateInNumbers[0] == todayInNumbers[0]) {
-                        if (vaccineDay.dateInNumbers[1] > todayInNumbers[1])
+                    if (vaccineDay.date[0] == todayInNumbers[0]) {
+                        if (vaccineDay.date[1] > todayInNumbers[1])
                             openAppointmentsInFuture = this.calculateOpenAppointments(vaccineDay, openAppointmentsInFuture);
-                        if (vaccineDay.dateInNumbers[1] == todayInNumbers[1])
-                            if (vaccineDay.dateInNumbers[2] > todayInNumbers[2])
+                        if (vaccineDay.date[1] == todayInNumbers[1])
+                            if (vaccineDay.date[2] > todayInNumbers[2])
                                 openAppointmentsInFuture = this.calculateOpenAppointments(vaccineDay, openAppointmentsInFuture);
                     }
                 }
@@ -298,12 +299,9 @@ export class Administrator {
                 ConsoleHandling.printInput("no data in database - make new vaccine day".color_at_256(196) + "\n");
                 this.goBack();
             }
-
-        }
-        if (this.vaccineDatabase == undefined)
             return false;
-        else
-            return true;
+        }
+        return true;
     }
     public checkRegexDate(_day: String): boolean {
         let dateReg: RegExp = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;

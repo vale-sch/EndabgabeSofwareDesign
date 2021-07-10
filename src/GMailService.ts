@@ -14,7 +14,7 @@ export class GMailService {
             to: to,
             subject: subject,
             text: content
-        }
+        };
 
         return new Promise<void>(
             // tslint:disable-next-line: no-any
@@ -22,13 +22,10 @@ export class GMailService {
                 reject: (err: Error) => void) => {
                 this._transporter.sendMail(
                     options, (error, info) => {
-                        if (error) {
-                            console.log("failed while email sending");
+                        if (error)
                             reject(error);
-                        } else {
-                            console.log("we have sent you an email with the date and time");
+                        else
                             resolve(`Message Sent ${info.response}`);
-                        }
                     });
             }
         );

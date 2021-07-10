@@ -11,6 +11,7 @@ async function startApp() {
     let answer = await ConsoleHandling_1.default.question("press " + "Y".color_at_256(118) + " to Continue, or " + "Z".color_at_256(196) + " to quit (" + "Y".color_at_256(118) + "): ");
     let vaccinee = new Vaccinee_1.Vaccinee();
     switch (answer.toLowerCase()) {
+        default:
         case "y":
             vaccinee.showVaccineeMethods();
             break;
@@ -20,12 +21,8 @@ async function startApp() {
         case "a":
             vaccinee = null;
             const admin = new administrator_1.Administrator();
-            admin.showAdminMethods();
-            //admin.adminLogin();
-            break;
-        default:
-            vaccinee.showVaccineeMethods();
+            admin.adminLogin();
             break;
     }
 }
-//# sourceMappingURL=VaccineMain.js.map
+//# sourceMappingURL=VaccineAppMain.js.map

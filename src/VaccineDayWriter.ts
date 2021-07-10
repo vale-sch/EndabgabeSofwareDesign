@@ -4,6 +4,7 @@ import FileHandler from "./FileHandler";
 import { CalculatedVaccineDay } from "./CalculatedVaccineDay";
 import { VaccineAppointmentStructur } from "./VaccineAppointmentStructure";
 import { VaccineeInformation } from "./VaccineeInformation";
+import { GMailService } from "./GMailService";
 
 
 
@@ -15,6 +16,8 @@ export class VaccineDayWriter {
     public parallelyVaccines: number;
     public timeBetweeenVaccines: number;
     public admin: Administrator;
+
+    private waitingList: VaccineeInformation[];
     constructor(_dateString: String, _dateInNumbers: number[], _periodFrom: number[], _periodTo: number[], _parallelyVaccines: number, _timeBetweeenVaccines: number, _admin: Administrator) {
         this.dateString = _dateString;
         this.dateInNumbers = _dateInNumbers;
@@ -58,9 +61,7 @@ export class VaccineDayWriter {
         let eventCounterModulo: number = 1;
         let hoursAfter: number = _hoursBegin;
         let minAfter: number = _minutesBegin;
-        let emptyVaccineInformations: VaccineeInformation[] = new Array<VaccineeInformation>();
-        for (let i: number = 0; i < this.parallelyVaccines; i++)
-            emptyVaccineInformations[i] = new VaccineeInformation("", "", "", "", "", "");
+
         for (let eventCounter: number = 1; eventCounter <= _eventAmount; eventCounter++) {
             if (eventCounter % this.parallelyVaccines == 0) {
                 minAfter += this.timeBetweeenVaccines;
@@ -69,6 +70,9 @@ export class VaccineDayWriter {
                         hoursAfter++;
                         minAfter = 0;
                     }
+                let emptyVaccineInformations: VaccineeInformation[] = new Array<VaccineeInformation>();
+                for (let i: number = 0; i < this.parallelyVaccines; i++)
+                    emptyVaccineInformations[i] = new VaccineeInformation("", "", "", "", "", "");
                 _vaccineAppointmentStructure[eventCounterModulo] = new VaccineAppointmentStructur(this.dateString, new Array(oldModuloNumber, modoloNumber),
                     // tslint:disable-next-line: align
                     new Array(_hoursBegin, _minutesBegin), new Array(hoursAfter, minAfter), new Array(this.parallelyVaccines).fill(true), emptyVaccineInformations);
@@ -81,7 +85,8 @@ export class VaccineDayWriter {
         }
         _vaccineAppointmentStructure.shift();
         let uniqueNumber: number = Math.round(Date.now() + Math.random());
-        let newCalculatedVaccineDay: CalculatedVaccineDay = new CalculatedVaccineDay(this.dateString, uniqueNumber, this.parallelyVaccines, this.timeBetweeenVaccines, _eventAmount, this.dateInNumbers, this.periodFrom, this.periodTo, _vaccineAppointmentStructure);
+        let newCalculatedVaccineDay: CalculatedVaccineDay = new CalculatedVaccineDay(this.dateString, uniqueNumber, this.parallelyVaccines,
+            this.timeBetweeenVaccines, _eventAmount, this.dateInNumbers, this.periodFrom[0].toString() + this.periodFrom[1].toString(), this.periodTo[0].toString() + this.periodTo[1].toString(), _vaccineAppointmentStructure);
 
         this.writeNewDay(newCalculatedVaccineDay);
     }
@@ -95,9 +100,54 @@ export class VaccineDayWriter {
         }
         let vaccineDays: CalculatedVaccineDay[] = FileHandler.readArrayFile("/data/vaccineDaysDB.json");
         vaccineDays.push(_newCalculatedVaccineDay);
-        FileHandler.writeFile("/data/vaccineDaysDB.json", vaccineDays);
+        if (this.getActualWaitingList()) {
+            vaccineDays.forEach(vaccineDay => {
+                vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+                    let lengthOfWaiters: number = 0;
+                    vaccineAppointmentRound.vaccineeInformations.forEach(vaccineeInformationInDB => {
+                        this.waitingList.forEach(vaccineeInformation => {
+                            if (vaccineeInformationInDB.email == "") {
+                                if (0 < this.waitingList.length) {
+                                    vaccineeInformationInDB.adress = vaccineeInformation.adress;
+                                    vaccineeInformationInDB.birth = vaccineeInformation.birth;
+                                    vaccineeInformationInDB.email = vaccineeInformation.email;
+                                    vaccineeInformationInDB.familyName = vaccineeInformation.familyName;
+                                    vaccineeInformationInDB.name = vaccineeInformation.name;
+                                    vaccineeInformationInDB.phone = vaccineeInformation.phone;
+                                    vaccineAppointmentRound.freePlaces[lengthOfWaiters] = false;
+                                    lengthOfWaiters++;
+                                    let gmailService: GMailService = new GMailService();
+                                    gmailService.sendMail(
+                                        <string>vaccineeInformation.email,
+                                        "Vaccine Appointment on " + vaccineDay.dateString,
+                                        "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked appointment on " + vaccineDay.dateString + " at " + vaccineAppointmentRound.startTime + ", " +
+                                        " \n " + "Your Informations: " + " \n\n " + "Email: " + <string>vaccineeInformation.email + " \n " + "family name: " + vaccineeInformation.familyName + " \n " +
+                                        "name: " + vaccineeInformation.name + " \n " + "birth: " + vaccineeInformation.birth + " \n " + "phone: " + vaccineeInformation.phone + " \n " + "adress: " +
+                                        vaccineeInformation.adress + " \n " + "Your verification number: " + vaccineDay.verficationDayNumber + " \n\n\n " + "thank you for supporting our app, stay healthy!");
 
+
+                                    this.waitingList.shift();
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+        }
+        FileHandler.writeFile("/data/vaccineDaysDB.json", vaccineDays);
+        FileHandler.writeFile("/data/waitListVaccinees.json", []);
         ConsoleHandling.printInput("you have succesfully created a new vaccine day!".color_at_256(118));
         this.admin.goBack();
+    }
+    public getActualWaitingList(): boolean {
+        try {
+            this.waitingList = FileHandler.readArrayFile("/data/waitListVaccinees.json");
+        } catch (error) {
+            return false;
+        }
+        if (this.waitingList.length == 0)
+            return false;
+        else
+            return true;
     }
 }

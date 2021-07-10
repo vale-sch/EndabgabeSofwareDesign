@@ -19,14 +19,10 @@ class GMailService {
         // tslint:disable-next-line: no-any
         (resolve, reject) => {
             this._transporter.sendMail(options, (error, info) => {
-                if (error) {
-                    console.log("failed while email sending");
+                if (error)
                     reject(error);
-                }
-                else {
-                    console.log("we have sent you an email with the date and time");
+                else
                     resolve(`Message Sent ${info.response}`);
-                }
             });
         });
     }
