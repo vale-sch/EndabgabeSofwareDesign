@@ -66,9 +66,10 @@ export class VaccineDayWriter {
             if (eventCounter % this.parallelyVaccines == 0) {
                 minAfter += this.timeBetweeenVaccines;
                 if (minAfter != 0)
-                    if (minAfter % 60 == 0) {
+                    if (minAfter / 60 >= 1) {
                         hoursAfter++;
-                        minAfter = 0;
+                        if (minAfter / 60 > 1)
+                            minAfter = minAfter % 60;
                     }
                 let emptyVaccineInformations: VaccineeInformation[] = new Array<VaccineeInformation>();
                 for (let i: number = 0; i < this.parallelyVaccines; i++)
@@ -85,8 +86,9 @@ export class VaccineDayWriter {
         }
         _vaccineAppointmentStructure.shift();
         let uniqueNumber: number = Math.round(Date.now() + Math.random());
-        let newCalculatedVaccineDay: CalculatedVaccineDay = new CalculatedVaccineDay(this.dateString, uniqueNumber, this.parallelyVaccines,
-            this.timeBetweeenVaccines, _eventAmount, this.dateInNumbers, this.periodFrom[0].toString() + this.periodFrom[1].toString(), this.periodTo[0].toString() + this.periodTo[1].toString(), _vaccineAppointmentStructure);
+        let newCalculatedVaccineDay: CalculatedVaccineDay = new CalculatedVaccineDay(this.dateString, uniqueNumber, this.parallelyVaccines, this.timeBetweeenVaccines, _eventAmount,
+            // tslint:disable-next-line: align
+            this.dateInNumbers, this.periodFrom[0].toString() + this.periodFrom[1].toString(), this.periodTo[0].toString() + this.periodTo[1].toString(), _vaccineAppointmentStructure);
 
         this.writeNewDay(newCalculatedVaccineDay);
     }
@@ -107,27 +109,33 @@ export class VaccineDayWriter {
                     vaccineAppointmentRound.vaccineeInformations.forEach(vaccineeInformationInDB => {
                         this.waitingList.forEach(vaccineeInformation => {
                             if (vaccineeInformationInDB.email == "") {
-                                if (0 < this.waitingList.length) {
-                                    vaccineeInformationInDB.adress = vaccineeInformation.adress;
-                                    vaccineeInformationInDB.birth = vaccineeInformation.birth;
-                                    vaccineeInformationInDB.email = vaccineeInformation.email;
-                                    vaccineeInformationInDB.familyName = vaccineeInformation.familyName;
-                                    vaccineeInformationInDB.name = vaccineeInformation.name;
-                                    vaccineeInformationInDB.phone = vaccineeInformation.phone;
-                                    vaccineAppointmentRound.freePlaces[lengthOfWaiters] = false;
-                                    lengthOfWaiters++;
-                                    let gmailService: GMailService = new GMailService();
-                                    gmailService.sendMail(
-                                        <string>vaccineeInformation.email,
-                                        "Vaccine Appointment on " + vaccineDay.dateString,
-                                        "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked appointment on " + vaccineDay.dateString + " at " + vaccineAppointmentRound.startTime + ", " +
-                                        " \n " + "Your Informations: " + " \n\n " + "Email: " + <string>vaccineeInformation.email + " \n " + "family name: " + vaccineeInformation.familyName + " \n " +
-                                        "name: " + vaccineeInformation.name + " \n " + "birth: " + vaccineeInformation.birth + " \n " + "phone: " + vaccineeInformation.phone + " \n " + "adress: " +
-                                        vaccineeInformation.adress + " \n " + "Your verification number: " + vaccineDay.verficationDayNumber + " \n\n\n " + "thank you for supporting our app, stay healthy!");
+                                let isAppointmentFree: boolean = false;
+                                vaccineAppointmentRound.freePlaces.forEach(free => {
+                                    if (free == true)
+                                        isAppointmentFree = true;
+                                });
+                                if (isAppointmentFree)
+                                    if (0 < this.waitingList.length) {
+                                        vaccineeInformationInDB.adress = vaccineeInformation.adress;
+                                        vaccineeInformationInDB.birth = vaccineeInformation.birth;
+                                        vaccineeInformationInDB.email = vaccineeInformation.email;
+                                        vaccineeInformationInDB.familyName = vaccineeInformation.familyName;
+                                        vaccineeInformationInDB.name = vaccineeInformation.name;
+                                        vaccineeInformationInDB.phone = vaccineeInformation.phone;
+                                        vaccineAppointmentRound.freePlaces[lengthOfWaiters] = false;
+                                        lengthOfWaiters++;
+                                        let gmailService: GMailService = new GMailService();
+                                        gmailService.sendMail(
+                                            <string>vaccineeInformation.email,
+                                            "Vaccine Appointment on " + vaccineDay.dateString,
+                                            "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked appointment on " + vaccineDay.dateString + " at " + vaccineAppointmentRound.startTime + ", " +
+                                            " \n " + "Your Informations: " + " \n\n " + "Email: " + <string>vaccineeInformation.email + " \n " + "family name: " + vaccineeInformation.familyName + " \n " +
+                                            "name: " + vaccineeInformation.name + " \n " + "birth: " + vaccineeInformation.birth + " \n " + "phone: " + vaccineeInformation.phone + " \n " + "adress: " +
+                                            vaccineeInformation.adress + " \n " + "Your verification number: " + vaccineDay.verficationDayNumber + " \n\n\n " + "thank you for supporting our app, stay healthy!");
 
 
-                                    this.waitingList.shift();
-                                }
+                                        this.waitingList.shift();
+                                    }
                             }
                         });
                     });

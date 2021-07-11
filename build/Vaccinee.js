@@ -27,6 +27,10 @@ class Vaccinee {
             case "1":
                 if (this.getActualVaccineDatabase()) {
                     this.stillOpenDays = this.calculateOpenAppointments();
+                    if (this.wholeAmountOfFree == 0) {
+                        await this.userIntoWaitinglist();
+                        return;
+                    }
                     this.showAvailableDays(this.stillOpenDays);
                     if (await this.checkOfValidInputFromUser(this.stillOpenDays))
                         this.registrateUser();
@@ -41,6 +45,10 @@ class Vaccinee {
             case "2":
                 if (this.getActualVaccineDatabase()) {
                     this.stillOpenDays = this.calculateOpenAppointments();
+                    if (this.wholeAmountOfFree == 0) {
+                        await this.userIntoWaitinglist();
+                        return;
+                    }
                     await this.showAvaibleAppointmentsFromDateInput(this.stillOpenDays);
                     if (await this.checkOfValidInputFromUser(this.stillOpenDays))
                         this.registrateUser();
@@ -79,10 +87,14 @@ class Vaccinee {
         if (this.getActualVaccineDatabase()) {
             stillOpenDays = new Array(this.vaccineDatabase.length);
             this.vaccineDatabase.forEach(vaccineDay => {
-                if (vaccineDay.date[0] >= todayDateInNumbers[0] && vaccineDay.date[1]
-                    >= todayDateInNumbers[1] && vaccineDay.date[2] >= todayDateInNumbers[2]) {
-                    if (stillOpenDays[dayIterator] == undefined)
-                        stillOpenDays[dayIterator] = new StillOpenDays_1.StillOpenDays(vaccineDay.dateString, new Array(vaccineDay.vaccineAppointmentRound.length));
+                let isPast = false;
+                if (vaccineDay.date[0] < todayDateInNumbers[0])
+                    isPast = true;
+                if (vaccineDay.date[0] == todayDateInNumbers[0] && vaccineDay.date[1] < todayDateInNumbers[1])
+                    isPast = true;
+                if (vaccineDay.date[0] == todayDateInNumbers[0] && vaccineDay.date[1] == todayDateInNumbers[1] && vaccineDay.date[2] < todayDateInNumbers[2])
+                    isPast = true;
+                if (!isPast) {
                     let appointmentIterator = 0;
                     vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
                         let howManyOpenPlaces = 0;
@@ -92,8 +104,12 @@ class Vaccinee {
                                 howManyOpenPlaces++;
                             }
                         });
-                        if (stillOpenDays[dayIterator].openTimes[appointmentIterator] == undefined)
-                            stillOpenDays[dayIterator].openTimes[appointmentIterator] = vaccineAppointmentRound.startTime + " (" + howManyOpenPlaces.toString().color_at_256(118) + ")";
+                        if (howManyOpenPlaces > 0) {
+                            if (stillOpenDays[dayIterator] == undefined)
+                                stillOpenDays[dayIterator] = new StillOpenDays_1.StillOpenDays(vaccineDay.dateString, new Array(vaccineDay.vaccineAppointmentRound.length));
+                            if (stillOpenDays[dayIterator].openTimes[appointmentIterator] == undefined)
+                                stillOpenDays[dayIterator].openTimes[appointmentIterator] = vaccineAppointmentRound.startTime + " (" + howManyOpenPlaces.toString().color_at_256(118) + ")";
+                        }
                         appointmentIterator++;
                     });
                     dayIterator++;

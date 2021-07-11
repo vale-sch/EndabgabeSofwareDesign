@@ -29,6 +29,10 @@ export class Vaccinee {
       case "1":
         if (this.getActualVaccineDatabase()) {
           this.stillOpenDays = this.calculateOpenAppointments();
+          if (this.wholeAmountOfFree == 0) {
+            await this.userIntoWaitinglist();
+            return;
+          }
           this.showAvailableDays(this.stillOpenDays);
           if (await this.checkOfValidInputFromUser(this.stillOpenDays))
             this.registrateUser();
@@ -43,6 +47,10 @@ export class Vaccinee {
       case "2":
         if (this.getActualVaccineDatabase()) {
           this.stillOpenDays = this.calculateOpenAppointments();
+          if (this.wholeAmountOfFree == 0) {
+            await this.userIntoWaitinglist();
+            return;
+          }
           await this.showAvaibleAppointmentsFromDateInput(this.stillOpenDays);
           if (await this.checkOfValidInputFromUser(this.stillOpenDays))
             this.registrateUser();
@@ -79,13 +87,18 @@ export class Vaccinee {
     let stillOpenDays: StillOpenDays[];
     let dayIterator: number = 0;
     this.wholeAmountOfFree = 0;
+
     if (this.getActualVaccineDatabase()) {
       stillOpenDays = new Array(this.vaccineDatabase.length);
       this.vaccineDatabase.forEach(vaccineDay => {
-        if (vaccineDay.date[0] >= todayDateInNumbers[0] && vaccineDay.date[1]
-          >= todayDateInNumbers[1] && vaccineDay.date[2] >= todayDateInNumbers[2]) {
-          if (stillOpenDays[dayIterator] == undefined)
-            stillOpenDays[dayIterator] = new StillOpenDays(<string>vaccineDay.dateString, new Array(vaccineDay.vaccineAppointmentRound.length));
+        let isPast: boolean = false;
+        if (vaccineDay.date[0] < todayDateInNumbers[0])
+          isPast = true;
+        if (vaccineDay.date[0] == todayDateInNumbers[0] && vaccineDay.date[1] < todayDateInNumbers[1])
+          isPast = true;
+        if (vaccineDay.date[0] == todayDateInNumbers[0] && vaccineDay.date[1] == todayDateInNumbers[1] && vaccineDay.date[2] < todayDateInNumbers[2])
+          isPast = true;
+        if (!isPast) {
           let appointmentIterator: number = 0;
           vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
             let howManyOpenPlaces: number = 0;
@@ -95,18 +108,21 @@ export class Vaccinee {
                 howManyOpenPlaces++;
               }
             });
-            if (stillOpenDays[dayIterator].openTimes[appointmentIterator] == undefined)
-              stillOpenDays[dayIterator].openTimes[appointmentIterator] = vaccineAppointmentRound.startTime + " (" + howManyOpenPlaces.toString().color_at_256(118) + ")";
+            if (howManyOpenPlaces > 0) {
+              if (stillOpenDays[dayIterator] == undefined)
+                stillOpenDays[dayIterator] = new StillOpenDays(<string>vaccineDay.dateString, new Array(vaccineDay.vaccineAppointmentRound.length));
+              if (stillOpenDays[dayIterator].openTimes[appointmentIterator] == undefined)
+                stillOpenDays[dayIterator].openTimes[appointmentIterator] = vaccineAppointmentRound.startTime + " (" + howManyOpenPlaces.toString().color_at_256(118) + ")";
+            }
             appointmentIterator++;
-
           });
-
           dayIterator++;
         }
       });
     }
     return stillOpenDays;
   }
+
   public async showAvaibleAppointmentsFromDateInput(_stillOpenDays: StillOpenDays[]): Promise<void> {
     let specificDate: String = await ConsoleHandling.question("on which date".color_at_256(226) + " you want to see " + "open ".color_at_256(118) + "appointments? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
     _stillOpenDays.forEach(openDay => {
@@ -141,7 +157,6 @@ export class Vaccinee {
     ConsoleHandling.printInput("whole amount of " + "open ".color_at_256(118) + "vaccine appointments: " + this.wholeAmountOfFree.toString().color_at_256(118));
     ConsoleHandling.printInput("please " + "note down ".color_at_256(226) + "your favourite " + "date".color_at_256(118) +
       " from the list and the " + "suitable time".color_at_256(118) + "\n");
-
   }
 
   public async checkOfValidInputFromUser(_stillOpenDays: StillOpenDays[]): Promise<boolean> {

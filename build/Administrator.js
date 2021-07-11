@@ -9,9 +9,9 @@ class Administrator {
     vaccineDatabase;
     async adminLogin() {
         ConsoleHandling_1.default.printInput("hello admin!".color_at_256(195) + "\n");
-        let username = await ConsoleHandling_1.default.question("enter Admin Name:");
+        let username = await ConsoleHandling_1.default.question("admin name: ");
         if (username == "admin") {
-            let password = await ConsoleHandling_1.default.question("enter Password:");
+            let password = await ConsoleHandling_1.default.question("password: ");
             if (password == "password")
                 this.showAdminMethods();
             else

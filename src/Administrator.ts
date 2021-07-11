@@ -10,9 +10,9 @@ export class Administrator {
 
     public async adminLogin(): Promise<void> {
         ConsoleHandling.printInput("hello admin!".color_at_256(195) + "\n");
-        let username: String = await ConsoleHandling.question("enter Admin Name:");
+        let username: String = await ConsoleHandling.question("admin name: ");
         if (username == "admin") {
-            let password: String = await ConsoleHandling.question("enter Password:");
+            let password: String = await ConsoleHandling.question("password: ");
             if (password == "password")
                 this.showAdminMethods();
             else
