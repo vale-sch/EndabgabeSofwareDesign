@@ -168,7 +168,7 @@ export class Administrator {
     public async showFreeAppointmentsOfDay(_specificDay: CalculatedVaccineDay): Promise<void> {
         ConsoleHandling.printInput("date: ".color_at_256(226) + _specificDay.date.color_at_256(51) + ", ".color_at_256(226) +
             "  time between vaccines on this day: ".color_at_256(226) + _specificDay.timeBetweenVaccines.toString().color_at_256(51));
-        ConsoleHandling.printInput("verfification number: ".color_at_256(226) + _specificDay.verficationDayNumber.toString().color_at_256(51) +
+        ConsoleHandling.printInput("verfification number: ".color_at_256(226) + ", ".color_at_256(226) + _specificDay.verficationDayNumber.toString().color_at_256(51) +
             "  total amount on this day: ".color_at_256(226) + _specificDay.totalAmountOfVaccines.toString().color_at_256(51));
         ConsoleHandling.printInput("open times:".color_at_256(226));
         _specificDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {

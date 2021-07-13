@@ -4,7 +4,7 @@ import FileHandler from "./FileHandler";
 import { GMailService } from "./GMailService";
 import { StillOpenDays } from "./StillOpenDays";
 import { VaccineeInformation } from "./VaccineeInformation";
-
+import * as alert from "alert";
 export class Vaccinee {
   public wholeAmountOfFree: number = 0;
   public stillOpenDays: StillOpenDays[];
@@ -13,6 +13,7 @@ export class Vaccinee {
   private waitingList: VaccineeInformation[];
   private validDateReqeust: String;
   private validTimeRequest: string;
+
 
   public async showVaccineeMethods(): Promise<void> {
     if (this.vaccineDatabase == undefined)
@@ -246,7 +247,8 @@ export class Vaccinee {
       });
 
       this.vaccineDatabase = vaccineDatabaseCache;
-      ConsoleHandling.printInput("you have successfully registrated to vaccine appointment, ypu will get an email");
+
+      alert("you have successfully registrated to vaccine appointment, you will get an email with the important information");
       let gmailService: GMailService = new GMailService();
       gmailService.sendMail(
         email,
@@ -264,8 +266,7 @@ export class Vaccinee {
       this.waitingList = FileHandler.readArrayFile("/data/waitListVaccinees.json");
       this.waitingList.push(vaccineeInformation);
 
-
-      ConsoleHandling.printInput("you have successfully registrated into waitinglist, as soon as appointment is open you will get an email with information");
+      alert("you have successfully registrated into waitinglist, as soon as appointment is open you will get an email with information");
       FileHandler.writeFile("/data/waitListVaccinees.json", this.waitingList);
     }
     await this.goBack();

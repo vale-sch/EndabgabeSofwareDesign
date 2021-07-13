@@ -70,6 +70,8 @@ export class VaccineDayWriter {
                         hoursAfter++;
                         if (minAfter / 60 > 1)
                             minAfter = minAfter % 60;
+                        else
+                            minAfter = 0;
                     }
                 let emptyVaccineInformations: VaccineeInformation[] = new Array<VaccineeInformation>();
                 for (let i: number = 0; i < this.parallelyVaccines; i++)

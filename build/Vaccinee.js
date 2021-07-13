@@ -6,6 +6,7 @@ const FileHandler_1 = require("./FileHandler");
 const GMailService_1 = require("./GMailService");
 const StillOpenDays_1 = require("./StillOpenDays");
 const VaccineeInformation_1 = require("./VaccineeInformation");
+const alert = require("alert");
 class Vaccinee {
     wholeAmountOfFree = 0;
     stillOpenDays;
@@ -235,7 +236,7 @@ class Vaccinee {
                     });
             });
             this.vaccineDatabase = vaccineDatabaseCache;
-            ConsoleHandling_1.default.printInput("you have successfully registrated to vaccine appointment, ypu will get an email");
+            alert("you have successfully registrated to vaccine appointment, you will get an email with the important information");
             let gmailService = new GMailService_1.GMailService();
             gmailService.sendMail(email, "Vaccine Appointment on " + this.validDateReqeust, "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked appointment on " + this.validDateReqeust + " at " + this.validTimeRequest + ", " + " \n " + "Your Informations: " +
                 " \n\n " + "Email: " + email + " \n " + "family name: " + familyName + " \n " + "name: " + name + " \n " + "birth: " + birth + " \n "
@@ -248,7 +249,7 @@ class Vaccinee {
                 FileHandler_1.default.writeFile("/data/waitListVaccinees.json", []);
             this.waitingList = FileHandler_1.default.readArrayFile("/data/waitListVaccinees.json");
             this.waitingList.push(vaccineeInformation);
-            ConsoleHandling_1.default.printInput("you have successfully registrated into waitinglist, as soon as appointment is open you will get an email with information");
+            alert("you have successfully registrated into waitinglist, as soon as appointment is open you will get an email with information");
             FileHandler_1.default.writeFile("/data/waitListVaccinees.json", this.waitingList);
         }
         await this.goBack();
