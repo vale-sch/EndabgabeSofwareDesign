@@ -88,11 +88,11 @@ class Vaccinee {
             stillOpenDays = new Array(this.vaccineDatabase.length);
             this.vaccineDatabase.forEach(vaccineDay => {
                 let isPast = false;
-                if (vaccineDay.date[0] < todayDateInNumbers[0])
+                if (vaccineDay.dateInNumbers[0] < todayDateInNumbers[0])
                     isPast = true;
-                if (vaccineDay.date[0] == todayDateInNumbers[0] && vaccineDay.date[1] < todayDateInNumbers[1])
+                if (vaccineDay.dateInNumbers[0] == todayDateInNumbers[0] && vaccineDay.dateInNumbers[1] < todayDateInNumbers[1])
                     isPast = true;
-                if (vaccineDay.date[0] == todayDateInNumbers[0] && vaccineDay.date[1] == todayDateInNumbers[1] && vaccineDay.date[2] < todayDateInNumbers[2])
+                if (vaccineDay.dateInNumbers[0] == todayDateInNumbers[0] && vaccineDay.dateInNumbers[1] == todayDateInNumbers[1] && vaccineDay.dateInNumbers[2] < todayDateInNumbers[2])
                     isPast = true;
                 if (!isPast) {
                     let appointmentIterator = 0;
@@ -106,7 +106,7 @@ class Vaccinee {
                         });
                         if (howManyOpenPlaces > 0) {
                             if (stillOpenDays[dayIterator] == undefined)
-                                stillOpenDays[dayIterator] = new StillOpenDays_1.StillOpenDays(vaccineDay.dateString, new Array(vaccineDay.vaccineAppointmentRound.length));
+                                stillOpenDays[dayIterator] = new StillOpenDays_1.StillOpenDays(vaccineDay.date, new Array(vaccineDay.vaccineAppointmentRound.length));
                             if (stillOpenDays[dayIterator].openTimes[appointmentIterator] == undefined)
                                 stillOpenDays[dayIterator].openTimes[appointmentIterator] = vaccineAppointmentRound.startTime + " (" + howManyOpenPlaces.toString().color_at_256(118) + ")";
                         }
@@ -210,7 +210,7 @@ class Vaccinee {
         if (_inWaitingList != true) {
             let vaccineDatabaseCache = this.vaccineDatabase;
             vaccineDatabaseCache.forEach(vaccineDay => {
-                if (vaccineDay.dateString == this.validDateReqeust)
+                if (vaccineDay.date == this.validDateReqeust)
                     vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
                         if (this.validTimeRequest == vaccineAppointmentRound.startTime) {
                             verficationNumber = vaccineDay.verficationDayNumber.toString();

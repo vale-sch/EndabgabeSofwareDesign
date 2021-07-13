@@ -92,11 +92,11 @@ export class Vaccinee {
       stillOpenDays = new Array(this.vaccineDatabase.length);
       this.vaccineDatabase.forEach(vaccineDay => {
         let isPast: boolean = false;
-        if (vaccineDay.date[0] < todayDateInNumbers[0])
+        if (vaccineDay.dateInNumbers[0] < todayDateInNumbers[0])
           isPast = true;
-        if (vaccineDay.date[0] == todayDateInNumbers[0] && vaccineDay.date[1] < todayDateInNumbers[1])
+        if (vaccineDay.dateInNumbers[0] == todayDateInNumbers[0] && vaccineDay.dateInNumbers[1] < todayDateInNumbers[1])
           isPast = true;
-        if (vaccineDay.date[0] == todayDateInNumbers[0] && vaccineDay.date[1] == todayDateInNumbers[1] && vaccineDay.date[2] < todayDateInNumbers[2])
+        if (vaccineDay.dateInNumbers[0] == todayDateInNumbers[0] && vaccineDay.dateInNumbers[1] == todayDateInNumbers[1] && vaccineDay.dateInNumbers[2] < todayDateInNumbers[2])
           isPast = true;
         if (!isPast) {
           let appointmentIterator: number = 0;
@@ -110,7 +110,7 @@ export class Vaccinee {
             });
             if (howManyOpenPlaces > 0) {
               if (stillOpenDays[dayIterator] == undefined)
-                stillOpenDays[dayIterator] = new StillOpenDays(<string>vaccineDay.dateString, new Array(vaccineDay.vaccineAppointmentRound.length));
+                stillOpenDays[dayIterator] = new StillOpenDays(<string>vaccineDay.date, new Array(vaccineDay.vaccineAppointmentRound.length));
               if (stillOpenDays[dayIterator].openTimes[appointmentIterator] == undefined)
                 stillOpenDays[dayIterator].openTimes[appointmentIterator] = vaccineAppointmentRound.startTime + " (" + howManyOpenPlaces.toString().color_at_256(118) + ")";
             }
@@ -220,7 +220,7 @@ export class Vaccinee {
     if (_inWaitingList != true) {
       let vaccineDatabaseCache: CalculatedVaccineDay[] = this.vaccineDatabase;
       vaccineDatabaseCache.forEach(vaccineDay => {
-        if (vaccineDay.dateString == this.validDateReqeust)
+        if (vaccineDay.date == this.validDateReqeust)
           vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
             if (this.validTimeRequest == vaccineAppointmentRound.startTime) {
               verficationNumber = vaccineDay.verficationDayNumber.toString();

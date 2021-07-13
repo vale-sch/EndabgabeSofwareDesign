@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "VA": "nodemon build/VaccineAppMain.js"
+    "vaccineMe": "nodemon build/VaccineAppMain.js"
   },
   "keywords": [],
   "author": "",
