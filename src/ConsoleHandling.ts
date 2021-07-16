@@ -19,7 +19,6 @@ class ConsoleHandling {
 
   public static getInstance(): ConsoleHandling {
     return ConsoleHandling._instance;
-
   }
 
   public question(question: String): Promise<String> {

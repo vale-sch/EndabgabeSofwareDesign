@@ -1,13 +1,15 @@
 import * as nodemailer from "nodemailer";
 export class GMailService {
+
     private _transporter: nodemailer.Transporter;
+
     constructor() {
         this._transporter = nodemailer.createTransport(
             `smtps://softwaredesignva%40gmail.com:absdfeg12345@smtp.gmail.com`
         );
     }
-    sendMail(to: string, subject: string, content: string)
-        : Promise<void> {
+
+    public sendMail(to: string, subject: string, content: string): Promise<void> {
         // tslint:disable-next-line: no-any
         let options: any = {
             from: "softwaredesignva@gmail.com",

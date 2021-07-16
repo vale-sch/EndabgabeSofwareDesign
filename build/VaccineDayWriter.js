@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VaccineDayWriter = void 0;
+const Administrator_1 = require("./Administrator");
 const ConsoleHandling_1 = require("./ConsoleHandling");
 const FileHandler_1 = require("./FileHandler");
 const CalculatedVaccineDay_1 = require("./CalculatedVaccineDay");
@@ -9,21 +10,19 @@ const VaccineeInformation_1 = require("./VaccineeInformation");
 const GMailService_1 = require("./GMailService");
 class VaccineDayWriter {
     dateString;
+    parallelyVaccines;
+    timeBetweeenVaccines;
     dateInNumbers;
     periodFrom;
     periodTo;
-    parallelyVaccines;
-    timeBetweeenVaccines;
-    admin;
     waitingList;
-    constructor(_dateString, _dateInNumbers, _periodFrom, _periodTo, _parallelyVaccines, _timeBetweeenVaccines, _admin) {
+    constructor(_dateString, _dateInNumbers, _periodFrom, _periodTo, _parallelyVaccines, _timeBetweeenVaccines) {
         this.dateString = _dateString;
         this.dateInNumbers = _dateInNumbers;
         this.periodFrom = _periodFrom;
         this.periodTo = _periodTo;
         this.parallelyVaccines = _parallelyVaccines;
         this.timeBetweeenVaccines = _timeBetweeenVaccines;
-        this.admin = _admin;
         this.calculateAppointmentAmount();
     }
     calculateAppointmentAmount() {
@@ -35,7 +34,7 @@ class VaccineDayWriter {
         if ((hoursBegin - hoursStop) >= 0) {
             if (minutesBegin - minutesStop >= 0 || (hoursBegin - hoursStop) > 0) {
                 ConsoleHandling_1.default.printInput("dude you going backward - wrong period input".color_at_256(196) + "\n");
-                this.admin.goBack();
+                Administrator_1.default.goBack();
                 return;
             }
         }
@@ -79,9 +78,9 @@ class VaccineDayWriter {
         }
         _vaccineAppointmentStructure.shift();
         let uniqueNumber = Math.round(Date.now() + Math.random());
-        let newCalculatedVaccineDay = new CalculatedVaccineDay_1.CalculatedVaccineDay(this.dateString, uniqueNumber, this.parallelyVaccines, this.timeBetweeenVaccines, _eventAmount, 
+        let newCalculatedVaccineDay = new CalculatedVaccineDay_1.CalculatedVaccineDay(this.dateString, this.dateInNumbers, uniqueNumber, this.parallelyVaccines, this.timeBetweeenVaccines, _eventAmount, 
         // tslint:disable-next-line: align
-        this.dateInNumbers, new Array(this.periodFrom[0], +this.periodFrom[1]), new Array(this.periodTo[0], +this.periodTo[1]), _vaccineAppointmentStructure);
+        new Array(this.periodFrom[0], +this.periodFrom[1]), new Array(this.periodTo[0], +this.periodTo[1]), _vaccineAppointmentStructure);
         this.writeNewDay(newCalculatedVaccineDay);
     }
     writeNewDay(_newCalculatedVaccineDay) {
@@ -132,7 +131,7 @@ class VaccineDayWriter {
         FileHandler_1.default.writeFile("/data/vaccineDaysDB.json", vaccineDays);
         FileHandler_1.default.writeFile("/data/waitListVaccinees.json", []);
         ConsoleHandling_1.default.printInput("you have succesfully created a new vaccine day!".color_at_256(118));
-        this.admin.goBack();
+        Administrator_1.default.goBack();
     }
     getActualWaitingList() {
         try {

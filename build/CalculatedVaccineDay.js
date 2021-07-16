@@ -3,21 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CalculatedVaccineDay = void 0;
 class CalculatedVaccineDay {
     date;
+    dateInNumbers;
     verficationDayNumber;
     parallelyVaccines;
     timeBetweenVaccines;
     totalAmountOfVaccines;
-    dateInNumbers;
     startOfWorkingDay;
     endOfWorkingDay;
     vaccineAppointmentRound;
-    constructor(_dateString, _verficationDayNumber, _parallelyVaccines, _timeBetweenVaccines, _totalAmountOfVaccines, _dateInNumbers, _startOfWorkingDay, _endOfWorkingDay, _vaccineAppointmentRound) {
+    constructor(_dateString, _dateInNumbers, _verficationDayNumber, _parallelyVaccines, _timeBetweenVaccines, _totalAmountOfVaccines, _startOfWorkingDay, _endOfWorkingDay, _vaccineAppointmentRound) {
         this.date = _dateString;
+        this.dateInNumbers = _dateInNumbers;
         this.verficationDayNumber = _verficationDayNumber;
         this.parallelyVaccines = _parallelyVaccines;
         this.timeBetweenVaccines = _timeBetweenVaccines;
         this.totalAmountOfVaccines = _totalAmountOfVaccines;
-        this.dateInNumbers = _dateInNumbers;
         if (_startOfWorkingDay[1] == 0)
             this.startOfWorkingDay = _startOfWorkingDay[0].toString() + ":" + _startOfWorkingDay[1].toString() + "0";
         else if (_startOfWorkingDay[1] < 10 && _startOfWorkingDay[2] != 0)

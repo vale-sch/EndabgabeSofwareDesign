@@ -9,6 +9,7 @@ export class VaccineAppointmentStructur {
 
     public freePlaces: boolean[];
     public vaccineeInformations: VaccineeInformation[];
+
     constructor(_date: String, _vaccineAppointments: number[], _start: number[], _end: number[], _freePlaces: boolean[], _vaccineeInformations: VaccineeInformation[]) {
         this.date = _date;
         this.vaccineAppointments = _vaccineAppointments;
@@ -28,6 +29,5 @@ export class VaccineAppointmentStructur {
             this.endTime = _end[0].toString() + ":" + "0" + _end[1].toString();
         else
             this.endTime = _end[0].toString() + ":" + _end[1].toString();
-
     }
 }

@@ -4,6 +4,7 @@ exports.StillOpenDays = void 0;
 class StillOpenDays {
     openDate;
     openTimes;
+    amountOfFreePlaces;
     constructor(_openDates, _openTimes) {
         this.openDate = _openDates;
         this.openTimes = _openTimes;
