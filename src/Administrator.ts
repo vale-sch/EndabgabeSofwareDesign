@@ -26,7 +26,8 @@ export class Administrator {
     }
 
     public async showAdminMethods(): Promise<void> {
-        let answer: String = await ConsoleHandling.showPossibilities(["1. create new vaccination day", "2. get specific day overview", "3. get complete statistics overview", "4. enter vaccine role", "5. quit"],
+        let answer: String = await ConsoleHandling.showPossibilities(["1. create new vaccination day",
+            "2. get specific day overview", "3. get complete statistics overview", "4. enter vaccine role", "5. quit"],
             // tslint:disable-next-line: align
             "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
         this.handleAnswer(answer);
@@ -42,13 +43,13 @@ export class Administrator {
                 if (this.checkVaccineDB())
                     await this.adminUtils.getSpecificDay();
                 else
-                    this.showAdminMethods()
+                    this.showAdminMethods();
                 break;
             case "3":
                 if (this.checkVaccineDB())
                     await this.adminUtils.showStatisticsMenu();
                 else
-                    this.showAdminMethods()
+                    this.showAdminMethods();
                 break;
             case "4":
                 Vaccinee.showVaccineeMethods();
@@ -58,6 +59,7 @@ export class Administrator {
                 break;
         }
     }
+
     public checkVaccineDB(): boolean {
         if (this.adminUtils.vaccineDatabase.length > 0)
             return true;
@@ -66,8 +68,10 @@ export class Administrator {
             return false;
         }
     }
+
     public async goBack(): Promise<void> {
-        let answer: String = await ConsoleHandling.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) + " to quit (" + "Y".color_at_256(118) + "): ");
+        let answer: String = await ConsoleHandling.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) +
+            " to quit (" + "Y".color_at_256(118) + "): ");
         switch (answer.toLowerCase()) {
             case "y":
             default:

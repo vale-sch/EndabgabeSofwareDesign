@@ -153,7 +153,7 @@ export class VaccineeUtils {
             if (openDay.openDate == this.validDateReqeust)
                 openDay.openTimes.forEach(time => {
                     if (time.substring(0, 5) == this.validTimeRequest)
-                        if (parseInt(time[5]) > 0)
+                        if (parseInt(time.substring(5, 7)) > 0)
                             validTime = true;
                         else
                             validTime = false;

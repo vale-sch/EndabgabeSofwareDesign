@@ -25,7 +25,8 @@ class Administrator {
             ConsoleHandling_1.default.closeConsole();
     }
     async showAdminMethods() {
-        let answer = await ConsoleHandling_1.default.showPossibilities(["1. create new vaccination day", "2. get specific day overview", "3. get complete statistics overview", "4. enter vaccine role", "5. quit"], 
+        let answer = await ConsoleHandling_1.default.showPossibilities(["1. create new vaccination day",
+            "2. get specific day overview", "3. get complete statistics overview", "4. enter vaccine role", "5. quit"], 
         // tslint:disable-next-line: align
         "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
         this.handleAnswer(answer);
@@ -65,7 +66,8 @@ class Administrator {
         }
     }
     async goBack() {
-        let answer = await ConsoleHandling_1.default.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) + " to quit (" + "Y".color_at_256(118) + "): ");
+        let answer = await ConsoleHandling_1.default.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) +
+            " to quit (" + "Y".color_at_256(118) + "): ");
         switch (answer.toLowerCase()) {
             case "y":
             default:
