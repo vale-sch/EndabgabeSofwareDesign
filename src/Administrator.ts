@@ -1,25 +1,21 @@
 import ConsoleHandling from "./ConsoleHandling";
 import Vaccinee from "./Vaccinee";
-import AdministratorUtils from "./AdministratorUtils";
+import { AdministratorUtils } from "./AdministratorUtils";
+import CheckOfNullDB from "./CheckOfNullDB";
 
 export class Administrator {
-    private static _instance: Administrator = new Administrator();
 
-    constructor() {
-        if (Administrator._instance)
-            throw new Error("Use ConsoleHandling.getInstance() instead new ConsoleHandling()");
-        Administrator._instance = this;
-    }
-    public static getInstance(): Administrator {
-        return Administrator._instance;
-    }
+    private adminUtils: AdministratorUtils;
 
     public async adminLogin(): Promise<void> {
         let username: String = await ConsoleHandling.question("admin: ".color_at_256(196));
         if (username == "admin") {
             let password: String = await ConsoleHandling.question("password: ".color_at_256(196));
             if (password == "password") {
-                ConsoleHandling.printInput("hello admin!".color_at_256(195) + "\n");
+                ConsoleHandling.printInput("\n");
+                ConsoleHandling.printInput("hello admin!".color_at_256(195));
+                this.adminUtils = new AdministratorUtils(this);
+                this.adminUtils.vaccineDatabase = CheckOfNullDB.getVaccineDays();
                 this.showAdminMethods();
             }
             else
@@ -38,14 +34,21 @@ export class Administrator {
 
     public async handleAnswer(answer: String): Promise<void> {
         switch (answer) {
+            default:
             case "1":
-                AdministratorUtils.getInputForNewDayInformation();
+                this.adminUtils.getInputForNewDayInformation();
                 break;
             case "2":
-                AdministratorUtils.getSpecificDay();
+                if (this.checkVaccineDB())
+                    await this.adminUtils.getSpecificDay();
+                else
+                    this.showAdminMethods()
                 break;
             case "3":
-                AdministratorUtils.showStatisticsMenu();
+                if (this.checkVaccineDB())
+                    await this.adminUtils.showStatisticsMenu();
+                else
+                    this.showAdminMethods()
                 break;
             case "4":
                 Vaccinee.showVaccineeMethods();
@@ -53,9 +56,14 @@ export class Administrator {
             case "5":
                 ConsoleHandling.closeConsole();
                 break;
-            default:
-                AdministratorUtils.getInputForNewDayInformation();
-                break;
+        }
+    }
+    public checkVaccineDB(): boolean {
+        if (this.adminUtils.vaccineDatabase.length > 0)
+            return true;
+        else {
+            ConsoleHandling.printInput("no data in database".color_at_256(196) + " -> first you have to create a new day".color_at_256(118));
+            return false;
         }
     }
     public async goBack(): Promise<void> {
@@ -71,4 +79,3 @@ export class Administrator {
         }
     }
 }
-export default Administrator.getInstance();

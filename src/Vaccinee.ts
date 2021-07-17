@@ -1,15 +1,17 @@
+import CheckOfNullDB from "./CheckOfNullDB";
 import ConsoleHandling from "./ConsoleHandling";
 import { StillOpenDays } from "./StillOpenDays";
-import VaccineeUtils from "./VaccineeUtils";
+import { VaccineeUtils } from "./VaccineeUtils";
 
 export class Vaccinee {
   private static _instance: Vaccinee = new Vaccinee();
 
   private stillOpenDays: StillOpenDays[];
+  private vaccineUtils: VaccineeUtils = new VaccineeUtils();
 
   constructor() {
     if (Vaccinee._instance)
-      throw new Error("Use ConsoleHandling.getInstance() instead new ConsoleHandling()");
+      throw new Error("Use Vaccinee.getInstance() instead new Vaccinee()");
     Vaccinee._instance = this;
   }
 
@@ -18,8 +20,12 @@ export class Vaccinee {
   }
 
   public async showVaccineeMethods(): Promise<void> {
-    if (VaccineeUtils.vaccineDatabase == undefined)
+    if (this.vaccineUtils.vaccineDatabase == undefined) {
+      this.vaccineUtils.vaccineDatabase = CheckOfNullDB.getVaccineDays();
+      this.vaccineUtils.waitingList = CheckOfNullDB.getWaitList();
       ConsoleHandling.printInput("hello Vaccinee!".color_at_256(195));
+    }
+
     let answer: String = await ConsoleHandling.showPossibilities(["1. show open appointments for vaccination & registrate",
       "2. search in specific date for vaccination & registrate", "3. quit"],
       // tslint:disable-next-line: align
@@ -31,39 +37,39 @@ export class Vaccinee {
     switch (_answer) {
       default:
       case "1":
-        if (VaccineeUtils.getActualVaccineDatabase()) {
-          this.stillOpenDays = VaccineeUtils.calculateOpenAppointments();
-          if (VaccineeUtils.wholeAmountOfFree == 0) {
-            await VaccineeUtils.userIntoWaitinglist();
+        if (this.vaccineUtils.vaccineDatabase.length > 0) {
+          this.stillOpenDays = this.vaccineUtils.calculateOpenAppointments();
+          if (this.vaccineUtils.wholeAmountOfFree == 0) {
+            await this.vaccineUtils.userIntoWaitinglist();
             return;
           }
-          VaccineeUtils.showAvailableDays(this.stillOpenDays);
-          if (await VaccineeUtils.checkOfValidInputFromUser(this.stillOpenDays))
-            VaccineeUtils.registrateUser();
+          this.vaccineUtils.showAvailableDays(this.stillOpenDays);
+          if (await this.vaccineUtils.checkOfValidInputFromUser(this.stillOpenDays))
+            this.vaccineUtils.checkOfEmailInDB();
           else {
             ConsoleHandling.printInput("no available appointments at this date or at this time on the day");
             await this.goBack();
           }
         } else
-          await VaccineeUtils.userIntoWaitinglist();
+          await this.vaccineUtils.userIntoWaitinglist();
         break;
 
       case "2":
-        if (VaccineeUtils.getActualVaccineDatabase()) {
-          this.stillOpenDays = VaccineeUtils.calculateOpenAppointments();
-          if (VaccineeUtils.wholeAmountOfFree == 0) {
-            await VaccineeUtils.userIntoWaitinglist();
+        if (this.vaccineUtils.vaccineDatabase.length > 0) {
+          this.stillOpenDays = this.vaccineUtils.calculateOpenAppointments();
+          if (this.vaccineUtils.wholeAmountOfFree == 0) {
+            await this.vaccineUtils.userIntoWaitinglist();
             return;
           }
-          await VaccineeUtils.showAvaibleAppointmentsFromDateInput(this.stillOpenDays);
-          if (await VaccineeUtils.checkOfValidInputFromUser(this.stillOpenDays))
-            VaccineeUtils.registrateUser();
+          await this.vaccineUtils.showAvaibleAppointmentsFromDateInput(this.stillOpenDays);
+          if (await this.vaccineUtils.checkOfValidInputFromUser(this.stillOpenDays))
+            this.vaccineUtils.checkOfEmailInDB();
           else {
             ConsoleHandling.printInput("wrong date or time input");
             await this.goBack();
           }
         } else
-          await VaccineeUtils.userIntoWaitinglist();
+          await this.vaccineUtils.userIntoWaitinglist();
         break;
       case "3":
         ConsoleHandling.closeConsole();

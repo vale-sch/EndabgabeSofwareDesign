@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VaccineDayWriter = void 0;
-const Administrator_1 = require("./Administrator");
 const ConsoleHandling_1 = require("./ConsoleHandling");
 const FileHandler_1 = require("./FileHandler");
+const CheckOfNullDB_1 = require("./CheckOfNullDB");
 const CalculatedVaccineDay_1 = require("./CalculatedVaccineDay");
 const VaccineAppointmentStructure_1 = require("./VaccineAppointmentStructure");
 const VaccineeInformation_1 = require("./VaccineeInformation");
@@ -16,13 +16,15 @@ class VaccineDayWriter {
     periodFrom;
     periodTo;
     waitingList;
-    constructor(_dateString, _dateInNumbers, _periodFrom, _periodTo, _parallelyVaccines, _timeBetweeenVaccines) {
+    admin;
+    constructor(_dateString, _dateInNumbers, _periodFrom, _periodTo, _parallelyVaccines, _timeBetweeenVaccines, _admin) {
         this.dateString = _dateString;
         this.dateInNumbers = _dateInNumbers;
         this.periodFrom = _periodFrom;
         this.periodTo = _periodTo;
         this.parallelyVaccines = _parallelyVaccines;
         this.timeBetweeenVaccines = _timeBetweeenVaccines;
+        this.admin = _admin;
         this.calculateAppointmentAmount();
     }
     calculateAppointmentAmount() {
@@ -34,7 +36,7 @@ class VaccineDayWriter {
         if ((hoursBegin - hoursStop) >= 0) {
             if (minutesBegin - minutesStop >= 0 || (hoursBegin - hoursStop) > 0) {
                 ConsoleHandling_1.default.printInput("dude you going backward - wrong period input".color_at_256(196) + "\n");
-                Administrator_1.default.goBack();
+                this.admin.goBack();
                 return;
             }
         }
@@ -63,10 +65,10 @@ class VaccineDayWriter {
                         else
                             minAfter = 0;
                     }
-                let emptyVaccineInformations = new Array();
+                let emptyVaccineInformations = new Array(this.parallelyVaccines);
                 for (let i = 0; i < this.parallelyVaccines; i++)
                     emptyVaccineInformations[i] = new VaccineeInformation_1.VaccineeInformation("", "", "", "", "", "");
-                _vaccineAppointmentStructure[eventCounterModulo] = new VaccineAppointmentStructure_1.VaccineAppointmentStructur(this.dateString, new Array(oldModuloNumber, modoloNumber), 
+                _vaccineAppointmentStructure[eventCounterModulo] = new VaccineAppointmentStructure_1.VaccineAppointmentStructur(this.dateString, oldModuloNumber.toString() + "-" + modoloNumber.toString(), 
                 // tslint:disable-next-line: align
                 new Array(_hoursBegin, _minutesBegin), new Array(hoursAfter, minAfter), new Array(this.parallelyVaccines).fill(true), emptyVaccineInformations);
                 _minutesBegin = minAfter;
@@ -84,16 +86,10 @@ class VaccineDayWriter {
         this.writeNewDay(newCalculatedVaccineDay);
     }
     writeNewDay(_newCalculatedVaccineDay) {
-        try {
-            FileHandler_1.default.readArrayFile("/data/vaccineDaysDB.json");
-        }
-        catch (error) {
-            console.log("building JSON for first time...");
-            FileHandler_1.default.writeFile("/data/vaccineDaysDB.json", []);
-        }
-        let vaccineDays = FileHandler_1.default.readArrayFile("/data/vaccineDaysDB.json");
+        let vaccineDays = CheckOfNullDB_1.default.getVaccineDays();
         vaccineDays.push(_newCalculatedVaccineDay);
-        if (this.getActualWaitingList()) {
+        this.waitingList = CheckOfNullDB_1.default.getWaitList();
+        if (this.waitingList.length > 0) {
             vaccineDays.forEach(vaccineDay => {
                 vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
                     let lengthOfWaiters = 0;
@@ -116,10 +112,14 @@ class VaccineDayWriter {
                                         vaccineAppointmentRound.freePlaces[lengthOfWaiters] = false;
                                         lengthOfWaiters++;
                                         let gmailService = new GMailService_1.GMailService();
-                                        gmailService.sendMail(vaccineeInformation.email, "Vaccine Appointment on " + vaccineDay.dateInNumbers, "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked appointment on " + vaccineDay.dateInNumbers + " at " + vaccineAppointmentRound.startTime + ", " +
-                                            " \n " + "Your Informations: " + " \n\n " + "Email: " + vaccineeInformation.email + " \n " + "family name: " + vaccineeInformation.familyName + " \n " +
-                                            "name: " + vaccineeInformation.name + " \n " + "birth: " + vaccineeInformation.birth + " \n " + "phone: " + vaccineeInformation.phone + " \n " + "adress: " +
-                                            vaccineeInformation.adress + " \n " + "Your verification number: " + vaccineDay.verficationDayNumber + " \n\n\n " + "thank you for supporting our app, stay healthy!");
+                                        gmailService.sendMail(vaccineeInformation.email, "Vaccine Appointment on " + vaccineDay.dateInNumbers, "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked appointment on " +
+                                            vaccineDay.dateInNumbers + " at " + vaccineAppointmentRound.startTime + ", " +
+                                            " \n " + "Your Informations: " + " \n\n " + "Email: " + vaccineeInformation.email +
+                                            " \n " + "family name: " + vaccineeInformation.familyName + " \n " +
+                                            "name: " + vaccineeInformation.name + " \n " + "birth: " + vaccineeInformation.birth +
+                                            " \n " + "phone: " + vaccineeInformation.phone + " \n " + "adress: " +
+                                            vaccineeInformation.adress + " \n " + "Your verification number: " +
+                                            vaccineDay.verficationDayNumber + " \n\n\n " + "thank you for supporting our app, stay healthy!");
                                         this.waitingList.shift();
                                     }
                             }
@@ -128,22 +128,10 @@ class VaccineDayWriter {
                 });
             });
         }
-        FileHandler_1.default.writeFile("/data/vaccineDaysDB.json", vaccineDays);
+        FileHandler_1.default.writeFile("/data/vaccineDays.json", vaccineDays);
         FileHandler_1.default.writeFile("/data/waitListVaccinees.json", []);
         ConsoleHandling_1.default.printInput("you have succesfully created a new vaccine day!".color_at_256(118));
-        Administrator_1.default.goBack();
-    }
-    getActualWaitingList() {
-        try {
-            this.waitingList = FileHandler_1.default.readArrayFile("/data/waitListVaccinees.json");
-        }
-        catch (error) {
-            return false;
-        }
-        if (this.waitingList.length == 0)
-            return false;
-        else
-            return true;
+        this.admin.goBack();
     }
 }
 exports.VaccineDayWriter = VaccineDayWriter;

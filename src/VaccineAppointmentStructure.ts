@@ -1,8 +1,8 @@
 import { VaccineeInformation } from "./VaccineeInformation";
 
 export class VaccineAppointmentStructur {
-    public date: String;
-    public vaccineAppointments: number[];
+    public date: string;
+    public vaccineAppointments: string;
 
     public startTime: string;
     public endTime: string;
@@ -10,7 +10,7 @@ export class VaccineAppointmentStructur {
     public freePlaces: boolean[];
     public vaccineeInformations: VaccineeInformation[];
 
-    constructor(_date: String, _vaccineAppointments: number[], _start: number[], _end: number[], _freePlaces: boolean[], _vaccineeInformations: VaccineeInformation[]) {
+    constructor(_date: string, _vaccineAppointments: string, _start: number[], _end: number[], _freePlaces: boolean[], _vaccineeInformations: VaccineeInformation[]) {
         this.date = _date;
         this.vaccineAppointments = _vaccineAppointments;
         this.freePlaces = _freePlaces;
