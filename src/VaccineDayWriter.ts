@@ -128,7 +128,7 @@ export class VaccineDayWriter {
                                         gmailService.sendMail(
                                             vaccineeInformation.email,
                                             "Vaccine Appointment on " + vaccineDay.dateInNumbers,
-                                            "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked an appointment on " +
+                                            "Hello from vaccineMe," + " \n\n\n " + "you have successfully booked an appointment on " +
                                             vaccineDay.dateInNumbers + " at " + vaccineAppointmentRound.startTime + ", " +
                                             " \n " + "Your Informations: " + " \n\n " + "Email: " + vaccineeInformation.email +
                                             " \n " + "family name: " + vaccineeInformation.familyName + " \n " +

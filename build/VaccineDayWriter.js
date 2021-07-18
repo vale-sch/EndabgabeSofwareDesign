@@ -112,7 +112,7 @@ class VaccineDayWriter {
                                         vaccineAppointmentRound.freePlaces[lengthOfWaiters] = false;
                                         lengthOfWaiters++;
                                         let gmailService = new GMailService_1.GMailService();
-                                        gmailService.sendMail(vaccineeInformation.email, "Vaccine Appointment on " + vaccineDay.dateInNumbers, "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked an appointment on " +
+                                        gmailService.sendMail(vaccineeInformation.email, "Vaccine Appointment on " + vaccineDay.dateInNumbers, "Hello from vaccineMe," + " \n\n\n " + "you have successfully booked an appointment on " +
                                             vaccineDay.dateInNumbers + " at " + vaccineAppointmentRound.startTime + ", " +
                                             " \n " + "Your Informations: " + " \n\n " + "Email: " + vaccineeInformation.email +
                                             " \n " + "family name: " + vaccineeInformation.familyName + " \n " +
