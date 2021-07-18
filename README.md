@@ -16,8 +16,8 @@
 # instructions to enter admin mode
 
 1. to enter admin mode you have to hit the letter "a" (important!) at the start of the app (at the welcome slogan), instead of "y" or "z"
-2. you have to enter login datas which will look like this(request: <whatYouHaveToType>)
- 2.1 admin: <admin>
- 2.2 password: <password>
+2. you have to enter login datas which will look like this(request: "<"whatYouHaveToType">")
+ 2.1 admin: "<"admin">"
+ 2.2 password: "<"password">"
  --> for explanation: the admin name is "admin" and the password is "password" !!
 3. from now on follow instructions from console
