@@ -20,3 +20,7 @@
 3. admin: "admin"
 4. password: "password"
 5. from now on follow instructions from console
+
+# have fun
+
+try to find a bug!
