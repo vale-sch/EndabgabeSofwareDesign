@@ -17,28 +17,28 @@ class ConsoleHandling {
     static getInstance() {
         return ConsoleHandling._instance;
     }
-    question(question) {
+    question(_question) {
         return new Promise((resolve) => {
-            this.consoleLine.question(question.toString(), (_answer) => {
+            this.consoleLine.question(_question.toString(), (_answer) => {
                 resolve(_answer);
             });
         });
     }
-    showPossibilities(showPossibilities, question) {
+    showPossibilities(_showPossibilities, _question) {
         this.consoleLine.write("\n");
         this.consoleLine.write("what do you want to do? ".color_at_256(226));
         this.consoleLine.write("\n");
-        for (let possibility of showPossibilities) {
+        for (let possibility of _showPossibilities) {
             this.consoleLine.write(possibility.toString());
             this.consoleLine.write("\n");
         }
         this.consoleLine.write("\n");
-        return new Promise((resolve) => this.consoleLine.question(question.toString(), (answer) => {
+        return new Promise((resolve) => this.consoleLine.question(_question.toString(), (answer) => {
             resolve(answer);
         }));
     }
-    printInput(input) {
-        this.consoleLine.write(input);
+    printInput(_input) {
+        this.consoleLine.write(_input);
         this.consoleLine.write("\n");
     }
     closeConsole() {

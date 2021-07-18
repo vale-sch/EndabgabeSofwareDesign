@@ -14,41 +14,37 @@ class ConsoleHandling {
     if (ConsoleHandling._instance)
       throw new Error("Use ConsoleHandling.getInstance() instead new ConsoleHandling()");
     ConsoleHandling._instance = this;
-
   }
 
   public static getInstance(): ConsoleHandling {
     return ConsoleHandling._instance;
   }
 
-  public question(question: String): Promise<String> {
+  public question(_question: string): Promise<string> {
     return new Promise((resolve) => {
-      this.consoleLine.question(question.toString(), (_answer: string) => {
+      this.consoleLine.question(_question.toString(), (_answer: string) => {
         resolve(_answer);
       });
-
     });
-
   }
 
-  public showPossibilities(showPossibilities: String[], question: String): Promise<String> {
+  public showPossibilities(_showPossibilities: string[], _question: string): Promise<string> {
     this.consoleLine.write("\n");
     this.consoleLine.write("what do you want to do? ".color_at_256(226));
     this.consoleLine.write("\n");
-    for (let possibility of showPossibilities) {
+    for (let possibility of _showPossibilities) {
       this.consoleLine.write(possibility.toString());
       this.consoleLine.write("\n");
     }
     this.consoleLine.write("\n");
 
-    return new Promise((resolve) => this.consoleLine.question(question.toString(), (answer: string) => {
+    return new Promise((resolve) => this.consoleLine.question(_question.toString(), (answer: string) => {
       resolve(answer);
     }));
-
   }
 
-  public printInput(input: string): void {
-    this.consoleLine.write(input);
+  public printInput(_input: string): void {
+    this.consoleLine.write(_input);
     this.consoleLine.write("\n");
   }
 

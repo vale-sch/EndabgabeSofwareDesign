@@ -1,24 +1,24 @@
 
 import ConsoleHandling from "./ConsoleHandling";
 import CheckOfNullDB from "./CheckOfNullDB";
+import CheckRegex from "./CheckRegex";
 import { VaccineDayWriter } from "./VaccineDayWriter";
 import { CalculatedVaccineDay } from "./CalculatedVaccineDay";
-import { CheckRegex } from "./CheckRegex";
 import { Administrator } from "./Administrator";
 
 export class AdministratorUtils {
 
     public vaccineDatabase: CalculatedVaccineDay[];
-    private checkRegex: CheckRegex = new CheckRegex();
     private admin: Administrator;
+
     constructor(_admin: Administrator) {
         this.admin = _admin;
     }
 
     public async getInputForNewDayInformation(): Promise<void> {
-        let day: string = <string>await ConsoleHandling.question("what is the " + "date".color_at_256(226) + " of the new vaccine day? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
+        let day: string = await ConsoleHandling.question("what is the " + "date".color_at_256(226) + " of the new vaccine day? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
         //check valid information with regex
-        if (!this.checkRegex.date(day)) {
+        if (!CheckRegex.date(day)) {
             ConsoleHandling.printInput("unvalid date format".color_at_256(196));
             this.getInputForNewDayInformation();
         }
@@ -33,43 +33,27 @@ export class AdministratorUtils {
             });
         }
 
-        let period: string = <string>await ConsoleHandling.question("when is the " + "start and end time (24h-format)".color_at_256(226) +
+        let period: string = await ConsoleHandling.question("when is the " + "start and end time (24h-format)".color_at_256(226) +
             " of the new vaccine Day? " + "(" + "hh:mm-hh:mm".color_at_256(196) + ")" + ": ");
-        if (!this.checkRegex.timeAndPeriod(period, true)) {
+        if (!CheckRegex.timeAndPeriod(period, true)) {
             ConsoleHandling.printInput("unvalid period format".color_at_256(196));
             this.getInputForNewDayInformation();
         }
 
 
-        let parallelyVaccine: string = <string>await ConsoleHandling.question("how many " + "parallely".color_at_256(226) +
+        let parallelyVaccine: string = await ConsoleHandling.question("how many " + "parallely".color_at_256(226) +
             " vaccines are possible? " + "(" + "amount".color_at_256(196) + ")" + ": ");
-        let intervalsInMinutes: string = <string>await ConsoleHandling.question("how " + "long".color_at_256(226) +
+        let intervalsInMinutes: string = await ConsoleHandling.question("how " + "long".color_at_256(226) +
             " takes one vaccination? " + "(" + "min".color_at_256(196) + ")" + ": ");
 
         this.convertStringsAndWriteDay(day, period, parallelyVaccine, intervalsInMinutes);
     }
 
-    public convertStringsAndWriteDay(_day: string, _period: string, _parallelyVaccines: string, _intervalsInMinutes: string): void {
-        //convert input to numbers
-        let dayInNumber: number[] = new Array(parseInt(_day.substring(0, 4)), parseInt(_day.substring(5, 7)), parseInt(_day.substring(8, 10)));
-        let periodFromNumber: number[] = new Array(parseInt("" + parseInt(_period[0]) + parseInt(_period[1])), parseInt("" + parseInt(_period[3]) + parseInt(_period[4])));
-        let periodToNumber: number[] = new Array(parseInt("" + parseInt(_period[6]) + parseInt(_period[7])), parseInt("" + parseInt(_period[9]) + parseInt(_period[10])));
 
-        let parallelyVacccineNumber: number = parseInt(_parallelyVaccines.substring(0, _parallelyVaccines.length));
-        let intervalsInMinutesNumber: number = parseInt(_intervalsInMinutes.substring(0, _intervalsInMinutes.length));
-        if (_intervalsInMinutes == "" || _parallelyVaccines == "" || intervalsInMinutesNumber >= 61) {
-            ConsoleHandling.printInput("you typed in some bad value, i will bring you back".color_at_256(196));
-            this.admin.goBack();
-            return;
-        }
-        // tslint:disable-next-line: no-unused-expression
-        new VaccineDayWriter(_day, dayInNumber, periodFromNumber, periodToNumber, parallelyVacccineNumber, intervalsInMinutesNumber, this.admin);
-        this.vaccineDatabase = CheckOfNullDB.getVaccineDays();
-    }
 
     public async getSpecificDay(): Promise<void> {
-        let specificDayRequest: string = <string>await ConsoleHandling.question("which " + "date".color_at_256(226) + " are you looking for? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
-        if (!this.checkRegex.date(specificDayRequest)) {
+        let specificDayRequest: string = await ConsoleHandling.question("which " + "date".color_at_256(226) + " are you looking for? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
+        if (!CheckRegex.date(specificDayRequest)) {
             ConsoleHandling.printInput("unvalid date format".color_at_256(196));
             this.getSpecificDay();
             return;
@@ -85,7 +69,7 @@ export class AdministratorUtils {
             this.admin.goBack();
             return;
         } else {
-            let answer: string = <string>await ConsoleHandling.showPossibilities(["1. show percantage of day statistics", "2. show free appointments on this day", "3. go back"],
+            let answer: string = await ConsoleHandling.showPossibilities(["1. show percantage of day statistics", "2. show free appointments on this day", "3. go back"],
                 // tslint:disable-next-line: align
                 "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
             switch (answer) {
@@ -106,7 +90,7 @@ export class AdministratorUtils {
 
     public async showPercantageOfDay(_specificDay: CalculatedVaccineDay): Promise<void> {
         let openAmount: number = 0;
-        _specificDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+        _specificDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
             vaccineAppointmentRound.freePlaces.forEach(bool => {
                 if (bool == true)
                     openAmount++;
@@ -118,7 +102,7 @@ export class AdministratorUtils {
         ConsoleHandling.printInput("");
         ConsoleHandling.printInput("still free vaccination appointments: ".color_at_256(118) +
             ((openAmount / _specificDay.totalAmountOfVaccines) * 100).toFixed(2).toString().color_at_256(118) + "%".color_at_256(118));
-        let answer: string = <string>await ConsoleHandling.showPossibilities(["1. show free appointments on this day" + "(" + _specificDay.date.color_at_256(196) + ")", "2. go back"],
+        let answer: string = await ConsoleHandling.showPossibilities(["1. show free appointments on this day" + "(" + _specificDay.date.color_at_256(196) + ")", "2. go back"],
             // tslint:disable-next-line: align
             "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
         switch (answer) {
@@ -139,7 +123,7 @@ export class AdministratorUtils {
             ", ".color_at_256(226) + "  total amount of vaccinations on this day: ".color_at_256(226) + _specificDay.totalAmountOfVaccines.toString().color_at_256(51));
         ConsoleHandling.printInput("");
         ConsoleHandling.printInput("times ".color_at_256(226) + "  (amounts)".color_at_256(118));
-        _specificDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+        _specificDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
             let counterOfOpenAppointments: number = 0;
             vaccineAppointmentRound.freePlaces.forEach(bool => {
                 if (bool == true)
@@ -165,7 +149,7 @@ export class AdministratorUtils {
     }
 
     public async showStatisticsMenu(): Promise<void> {
-        let answer: string = <string>await ConsoleHandling.showPossibilities(["1. show statistics for all days and how many appointments are still open",
+        let answer: string = await ConsoleHandling.showPossibilities(["1. show statistics for all days and how many appointments are still open",
             "2. show free appointments in the past", "3. show free appointments in the future", "4. go back"],
             // tslint:disable-next-line: align
             "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
@@ -192,7 +176,7 @@ export class AdministratorUtils {
         let wholeAmount: number = 0;
         if (this.vaccineDatabase.length > 0) {
             this.vaccineDatabase.forEach(vaccineDay => {
-                vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+                vaccineDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
                     vaccineAppointmentRound.freePlaces.forEach(bool => {
                         wholeAmount++;
                         if (bool == false)
@@ -253,8 +237,26 @@ export class AdministratorUtils {
         }
     }
 
-    public calculateOpenAppointments(_vaccineDay: CalculatedVaccineDay, _increment: number): number {
-        _vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+    private convertStringsAndWriteDay(_day: string, _period: string, _parallelyVaccines: string, _intervalsInMinutes: string): void {
+        //convert input to numbers
+        let dayInNumber: number[] = new Array(parseInt(_day.substring(0, 4)), parseInt(_day.substring(5, 7)), parseInt(_day.substring(8, 10)));
+        let periodFromNumber: number[] = new Array(parseInt("" + parseInt(_period[0]) + parseInt(_period[1])), parseInt("" + parseInt(_period[3]) + parseInt(_period[4])));
+        let periodToNumber: number[] = new Array(parseInt("" + parseInt(_period[6]) + parseInt(_period[7])), parseInt("" + parseInt(_period[9]) + parseInt(_period[10])));
+
+        let parallelyVacccineNumber: number = parseInt(_parallelyVaccines.substring(0, _parallelyVaccines.length));
+        let intervalsInMinutesNumber: number = parseInt(_intervalsInMinutes.substring(0, _intervalsInMinutes.length));
+        if (_intervalsInMinutes == "" || _parallelyVaccines == "" || intervalsInMinutesNumber >= 61) {
+            ConsoleHandling.printInput("you typed in some bad value, i will bring you back".color_at_256(196));
+            this.admin.goBack();
+            return;
+        }
+        // tslint:disable-next-line: no-unused-expression
+        new VaccineDayWriter(_day, dayInNumber, periodFromNumber, periodToNumber, parallelyVacccineNumber, intervalsInMinutesNumber, this.admin);
+        this.vaccineDatabase = CheckOfNullDB.getVaccineDays();
+    }
+
+    private calculateOpenAppointments(_vaccineDay: CalculatedVaccineDay, _increment: number): number {
+        _vaccineDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
             vaccineAppointmentRound.freePlaces.forEach(bool => {
                 if (bool == true)
                     _increment++;

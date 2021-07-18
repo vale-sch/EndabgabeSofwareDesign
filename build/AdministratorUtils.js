@@ -3,11 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdministratorUtils = void 0;
 const ConsoleHandling_1 = require("./ConsoleHandling");
 const CheckOfNullDB_1 = require("./CheckOfNullDB");
-const VaccineDayWriter_1 = require("./VaccineDayWriter");
 const CheckRegex_1 = require("./CheckRegex");
+const VaccineDayWriter_1 = require("./VaccineDayWriter");
 class AdministratorUtils {
     vaccineDatabase;
-    checkRegex = new CheckRegex_1.CheckRegex();
     admin;
     constructor(_admin) {
         this.admin = _admin;
@@ -15,7 +14,7 @@ class AdministratorUtils {
     async getInputForNewDayInformation() {
         let day = await ConsoleHandling_1.default.question("what is the " + "date".color_at_256(226) + " of the new vaccine day? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
         //check valid information with regex
-        if (!this.checkRegex.date(day)) {
+        if (!CheckRegex_1.default.date(day)) {
             ConsoleHandling_1.default.printInput("unvalid date format".color_at_256(196));
             this.getInputForNewDayInformation();
         }
@@ -29,7 +28,7 @@ class AdministratorUtils {
         }
         let period = await ConsoleHandling_1.default.question("when is the " + "start and end time (24h-format)".color_at_256(226) +
             " of the new vaccine Day? " + "(" + "hh:mm-hh:mm".color_at_256(196) + ")" + ": ");
-        if (!this.checkRegex.timeAndPeriod(period, true)) {
+        if (!CheckRegex_1.default.timeAndPeriod(period, true)) {
             ConsoleHandling_1.default.printInput("unvalid period format".color_at_256(196));
             this.getInputForNewDayInformation();
         }
@@ -39,25 +38,9 @@ class AdministratorUtils {
             " takes one vaccination? " + "(" + "min".color_at_256(196) + ")" + ": ");
         this.convertStringsAndWriteDay(day, period, parallelyVaccine, intervalsInMinutes);
     }
-    convertStringsAndWriteDay(_day, _period, _parallelyVaccines, _intervalsInMinutes) {
-        //convert input to numbers
-        let dayInNumber = new Array(parseInt(_day.substring(0, 4)), parseInt(_day.substring(5, 7)), parseInt(_day.substring(8, 10)));
-        let periodFromNumber = new Array(parseInt("" + parseInt(_period[0]) + parseInt(_period[1])), parseInt("" + parseInt(_period[3]) + parseInt(_period[4])));
-        let periodToNumber = new Array(parseInt("" + parseInt(_period[6]) + parseInt(_period[7])), parseInt("" + parseInt(_period[9]) + parseInt(_period[10])));
-        let parallelyVacccineNumber = parseInt(_parallelyVaccines.substring(0, _parallelyVaccines.length));
-        let intervalsInMinutesNumber = parseInt(_intervalsInMinutes.substring(0, _intervalsInMinutes.length));
-        if (_intervalsInMinutes == "" || _parallelyVaccines == "" || intervalsInMinutesNumber >= 61) {
-            ConsoleHandling_1.default.printInput("you typed in some bad value, i will bring you back".color_at_256(196));
-            this.admin.goBack();
-            return;
-        }
-        // tslint:disable-next-line: no-unused-expression
-        new VaccineDayWriter_1.VaccineDayWriter(_day, dayInNumber, periodFromNumber, periodToNumber, parallelyVacccineNumber, intervalsInMinutesNumber, this.admin);
-        this.vaccineDatabase = CheckOfNullDB_1.default.getVaccineDays();
-    }
     async getSpecificDay() {
         let specificDayRequest = await ConsoleHandling_1.default.question("which " + "date".color_at_256(226) + " are you looking for? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
-        if (!this.checkRegex.date(specificDayRequest)) {
+        if (!CheckRegex_1.default.date(specificDayRequest)) {
             ConsoleHandling_1.default.printInput("unvalid date format".color_at_256(196));
             this.getSpecificDay();
             return;
@@ -93,7 +76,7 @@ class AdministratorUtils {
     }
     async showPercantageOfDay(_specificDay) {
         let openAmount = 0;
-        _specificDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+        _specificDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
             vaccineAppointmentRound.freePlaces.forEach(bool => {
                 if (bool == true)
                     openAmount++;
@@ -125,7 +108,7 @@ class AdministratorUtils {
             ", ".color_at_256(226) + "  total amount of vaccinations on this day: ".color_at_256(226) + _specificDay.totalAmountOfVaccines.toString().color_at_256(51));
         ConsoleHandling_1.default.printInput("");
         ConsoleHandling_1.default.printInput("times ".color_at_256(226) + "  (amounts)".color_at_256(118));
-        _specificDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+        _specificDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
             let counterOfOpenAppointments = 0;
             vaccineAppointmentRound.freePlaces.forEach(bool => {
                 if (bool == true)
@@ -176,7 +159,7 @@ class AdministratorUtils {
         let wholeAmount = 0;
         if (this.vaccineDatabase.length > 0) {
             this.vaccineDatabase.forEach(vaccineDay => {
-                vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+                vaccineDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
                     vaccineAppointmentRound.freePlaces.forEach(bool => {
                         wholeAmount++;
                         if (bool == false)
@@ -236,8 +219,24 @@ class AdministratorUtils {
             this.showStatisticsMenu();
         }
     }
+    convertStringsAndWriteDay(_day, _period, _parallelyVaccines, _intervalsInMinutes) {
+        //convert input to numbers
+        let dayInNumber = new Array(parseInt(_day.substring(0, 4)), parseInt(_day.substring(5, 7)), parseInt(_day.substring(8, 10)));
+        let periodFromNumber = new Array(parseInt("" + parseInt(_period[0]) + parseInt(_period[1])), parseInt("" + parseInt(_period[3]) + parseInt(_period[4])));
+        let periodToNumber = new Array(parseInt("" + parseInt(_period[6]) + parseInt(_period[7])), parseInt("" + parseInt(_period[9]) + parseInt(_period[10])));
+        let parallelyVacccineNumber = parseInt(_parallelyVaccines.substring(0, _parallelyVaccines.length));
+        let intervalsInMinutesNumber = parseInt(_intervalsInMinutes.substring(0, _intervalsInMinutes.length));
+        if (_intervalsInMinutes == "" || _parallelyVaccines == "" || intervalsInMinutesNumber >= 61) {
+            ConsoleHandling_1.default.printInput("you typed in some bad value, i will bring you back".color_at_256(196));
+            this.admin.goBack();
+            return;
+        }
+        // tslint:disable-next-line: no-unused-expression
+        new VaccineDayWriter_1.VaccineDayWriter(_day, dayInNumber, periodFromNumber, periodToNumber, parallelyVacccineNumber, intervalsInMinutesNumber, this.admin);
+        this.vaccineDatabase = CheckOfNullDB_1.default.getVaccineDays();
+    }
     calculateOpenAppointments(_vaccineDay, _increment) {
-        _vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+        _vaccineDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
             vaccineAppointmentRound.freePlaces.forEach(bool => {
                 if (bool == true)
                     _increment++;

@@ -2,20 +2,20 @@ import { CalculatedVaccineDay } from "./CalculatedVaccineDay";
 import { GMailService } from "./GMailService";
 import { StillOpenDays } from "./StillOpenDays";
 import { VaccineeInformation } from "./VaccineeInformation";
-import { CheckRegex } from "./CheckRegex";
+import CheckRegex from "./CheckRegex";
 import * as alert from "alert";
 import ConsoleHandling from "./ConsoleHandling";
 import FileHandler from "./FileHandler";
 import Vaccinee from "./Vaccinee";
 export class VaccineeUtils {
 
+    public stillOpenDays: StillOpenDays[];
     public vaccineDatabase: CalculatedVaccineDay[];
     public waitingList: VaccineeInformation[];
     public wholeAmountOfFree: number = 0;
 
     private validDateReqeust: string;
     private validTimeRequest: string;
-    private checkRegex: CheckRegex = new CheckRegex();
 
     public async userIntoWaitinglist(): Promise<void> {
         ConsoleHandling.printInput("at " + "this time".color_at_256(226) + " there are " + "no open".color_at_256(196) + " vaccine appointments, do you want to " +
@@ -34,16 +34,16 @@ export class VaccineeUtils {
         }
     }
 
-    public calculateOpenAppointments(): StillOpenDays[] {
+    public calculateOpenAppointments(): void {
         let date: String = new Date().toJSON();
         let neededPart: String = date.substring(0, 10);
         let todayDateInNumbers: number[] = new Array(parseInt(neededPart.substring(0, 4)), parseInt(neededPart.substring(5, 7)), parseInt(neededPart.substring(8, 10)));
 
-        let stillOpenDays: StillOpenDays[];
         let dayIterator: number = 0;
         this.wholeAmountOfFree = 0;
         if (this.vaccineDatabase.length > 0) {
-            stillOpenDays = new Array(this.vaccineDatabase.length);
+            this.stillOpenDays = new Array(this.vaccineDatabase.length);
+            console.log(this.stillOpenDays.length);
             this.vaccineDatabase.forEach(vaccineDay => {
                 let isPast: boolean = false;
                 if (vaccineDay.dateInNumbers[0] < todayDateInNumbers[0])
@@ -54,7 +54,7 @@ export class VaccineeUtils {
                     isPast = true;
                 if (!isPast) {
                     let appointmentIterator: number = 0;
-                    vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+                    vaccineDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
                         let howManyOpenPlaces: number = 0;
                         vaccineAppointmentRound.freePlaces.forEach(bool => {
                             if (bool == true) {
@@ -62,21 +62,21 @@ export class VaccineeUtils {
                                 howManyOpenPlaces++;
                             }
                         });
-                        if (stillOpenDays[dayIterator] == undefined)
-                            stillOpenDays[dayIterator] = new StillOpenDays(vaccineDay.date, new Array(vaccineDay.vaccineAppointmentRound.length));
-                        if (stillOpenDays[dayIterator].openTimes[appointmentIterator] == undefined)
-                            stillOpenDays[dayIterator].openTimes[appointmentIterator] = vaccineAppointmentRound.startTime + howManyOpenPlaces.toString();
+                        if (this.stillOpenDays[dayIterator] == undefined)
+                            this.stillOpenDays[dayIterator] = new StillOpenDays(vaccineDay.date, new Array(vaccineDay.vaccineAppointments.length));
+                        if (this.stillOpenDays[dayIterator].openTimes[appointmentIterator] == undefined)
+                            this.stillOpenDays[dayIterator].openTimes[appointmentIterator] = vaccineAppointmentRound.startTime + howManyOpenPlaces.toString();
                         appointmentIterator++;
                     });
                     dayIterator++;
                 }
             });
+
         }
-        return stillOpenDays;
     }
 
-    public showAvailableDays(_stillOpenDays: StillOpenDays[]): void {
-        _stillOpenDays.forEach(day => {
+    public showAvailableDays(): void {
+        this.stillOpenDays.forEach(day => {
             ConsoleHandling.printInput("open ".color_at_256(118) + "vaccines on: " + day.openDate.color_at_256(226));
             ConsoleHandling.printInput("times ".color_at_256(226) + "  (amounts)".color_at_256(118));
             day.openTimes.forEach(time => {
@@ -89,21 +89,21 @@ export class VaccineeUtils {
         });
         ConsoleHandling.printInput("whole amount of " + "open ".color_at_256(118) + "vaccine appointments: " + this.wholeAmountOfFree.toString().color_at_256(118));
         ConsoleHandling.printInput("");
-        ConsoleHandling.printInput("---registration---");
+        ConsoleHandling.printInput("---registration---".color_at_256(226));
         ConsoleHandling.printInput("choose ".color_at_256(226) + "your favorite " + "date".color_at_256(118) +
             " from the list and the " + "suitable time".color_at_256(118) + "\n");
     }
 
-    public async showAvaibleAppointmentsFromDateInput(_stillOpenDays?: StillOpenDays[]): Promise<void> {
-        let specificDate: String = await ConsoleHandling.question("on which date".color_at_256(226) + " you want to see " +
+    public async showAvaibleAppointmentsFromDateInput(): Promise<void> {
+        let specificDate: string = await ConsoleHandling.question("on which date".color_at_256(226) + " you want to see " +
             "open ".color_at_256(118) + "appointments? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
-        if (!this.checkRegex.date(specificDate)) {
+        if (!CheckRegex.date(specificDate)) {
             ConsoleHandling.printInput("unvalid date format".color_at_256(196));
             this.showAvaibleAppointmentsFromDateInput();
         }
-        _stillOpenDays.forEach(openDay => {
+        this.stillOpenDays.forEach(openDay => {
             if (openDay.openDate == specificDate) {
-                _stillOpenDays.forEach(day => {
+                this.stillOpenDays.forEach(day => {
                     ConsoleHandling.printInput("open ".color_at_256(118) + "vaccines on: " + day.openDate.color_at_256(226));
                     ConsoleHandling.printInput("times ".color_at_256(226) + "  (amounts)".color_at_256(118));
                     day.openTimes.forEach(time => {
@@ -124,32 +124,32 @@ export class VaccineeUtils {
         });
     }
 
-    public async checkOfValidInputFromUser(_stillOpenDays: StillOpenDays[]): Promise<boolean> {
-        this.validDateReqeust = <string>await ConsoleHandling.question("which date".color_at_256(226) + " do you choose to get " +
+    public async checkOfValidInputFromUser(): Promise<boolean> {
+        this.validDateReqeust = await ConsoleHandling.question("which date".color_at_256(226) + " do you choose to get " +
             "vaccinated".color_at_256(226) + "? " + "(" + "yyyy-mm-dd".color_at_256(196) + ")" + ": ");
-        if (!this.checkRegex.date(this.validDateReqeust)) {
+        if (!CheckRegex.date(this.validDateReqeust)) {
             ConsoleHandling.printInput("unvalid date format".color_at_256(196));
             return false;
         }
 
 
         let isValidDate: boolean = false;
-        _stillOpenDays.forEach(openDay => {
+        this.stillOpenDays.forEach(openDay => {
             if (openDay.openDate == this.validDateReqeust)
                 isValidDate = true;
         });
         if (!isValidDate)
             return false;
 
-        this.validTimeRequest = <string>await ConsoleHandling.question("on which time ".color_at_256(226) + "do you want to get " +
+        this.validTimeRequest = await ConsoleHandling.question("on which time ".color_at_256(226) + "do you want to get " +
             "vaccinated".color_at_256(226) + "? " + "(" + "hh:mm".color_at_256(196) + ")" + ": ");
-        if (!this.checkRegex.timeAndPeriod(this.validTimeRequest, false)) {
+        if (!CheckRegex.timeAndPeriod(this.validTimeRequest, false)) {
             ConsoleHandling.printInput("unvalid time format".color_at_256(196));
             return false;
         }
 
         let validTime: boolean = false;
-        _stillOpenDays.forEach(openDay => {
+        this.stillOpenDays.forEach(openDay => {
             if (openDay.openDate == this.validDateReqeust)
                 openDay.openTimes.forEach(time => {
                     if (time.substring(0, 5) == this.validTimeRequest)
@@ -162,9 +162,9 @@ export class VaccineeUtils {
         return validTime;
     }
     public async checkOfEmailInDB(_inWaitingList?: boolean): Promise<void> {
-        let email: string = <string>await ConsoleHandling.question("please enter " + "email".color_at_256(226) + ": ");
+        let email: string = await ConsoleHandling.question("please enter " + "email".color_at_256(226) + ": ");
         let isValid: boolean = true;
-        if (!this.checkRegex.email(email)) {
+        if (!CheckRegex.email(email)) {
             ConsoleHandling.printInput("this is not a valid email");
             this.checkOfEmailInDB();
         }
@@ -177,7 +177,7 @@ export class VaccineeUtils {
             });
         } else
             this.vaccineDatabase.forEach(vaccineDay => {
-                vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+                vaccineDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
                     vaccineAppointmentRound.vaccineeInformations.forEach(vaccineeInformation => {
                         if (email == vaccineeInformation.email) {
                             ConsoleHandling.printInput("this email is " + "already registrated ".color_at_256(226) + "in a appointment");
@@ -193,19 +193,19 @@ export class VaccineeUtils {
             Vaccinee.goBack();
     }
 
-    public async registrateUser(_email?: string, _inWaitingList?: boolean): Promise<void> {
+    private async registrateUser(_email?: string, _inWaitingList?: boolean): Promise<void> {
 
-        let familyName: string = <string>await ConsoleHandling.question("please enter " + "familyName".color_at_256(226) + ": ");
-        let name: string = <string>await ConsoleHandling.question("please enter " + "name".color_at_256(226) + ": ");
-        let birth: string = <string>await ConsoleHandling.question("please enter " + "birth".color_at_256(226) + ": ");
-        let phone: string = <string>await ConsoleHandling.question("please enter " + "phone".color_at_256(226) + ": ");
-        let adress: string = <string>await ConsoleHandling.question("please enter " + "adress".color_at_256(226) + ": ");
+        let familyName: string = await ConsoleHandling.question("please enter " + "familyName".color_at_256(226) + ": ");
+        let name: string = await ConsoleHandling.question("please enter " + "name".color_at_256(226) + ": ");
+        let birth: string = await ConsoleHandling.question("please enter " + "birth".color_at_256(226) + ": ");
+        let phone: string = await ConsoleHandling.question("please enter " + "phone".color_at_256(226) + ": ");
+        let adress: string = await ConsoleHandling.question("please enter " + "adress".color_at_256(226) + ": ");
         let verficationNumber: string;
 
         if (!_inWaitingList) {
             this.vaccineDatabase.forEach(vaccineDay => {
                 if (vaccineDay.date == this.validDateReqeust)
-                    vaccineDay.vaccineAppointmentRound.forEach(vaccineAppointmentRound => {
+                    vaccineDay.vaccineAppointments.forEach(vaccineAppointmentRound => {
                         if (this.validTimeRequest == vaccineAppointmentRound.startTime) {
                             verficationNumber = vaccineDay.verficationDayNumber.toString();
                             let isRegistrated: boolean = false;
@@ -232,7 +232,7 @@ export class VaccineeUtils {
             gmailService.sendMail(
                 _email,
                 "Vaccine Appointment on " + this.validDateReqeust,
-                "Hello from VaccineApp," + " \n\n\n " + "you have successfully booked appointment on " + this.validDateReqeust +
+                "Hello from vaccineMe," + " \n\n\n " + "you have successfully booked an appointment on " + this.validDateReqeust +
                 " at " + this.validTimeRequest + ", " + " \n " + "Your Informations: " +
                 " \n\n " + "Email: " + _email + " \n " + "family name: " + familyName + " \n " + "name: " + name + " \n " + "birth: " + birth + " \n "
                 + "phone: " + phone + " \n " + "adress: " + adress + " \n " + "Your verification number: " + verficationNumber +

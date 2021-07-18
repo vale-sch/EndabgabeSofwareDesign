@@ -10,8 +10,8 @@ class CalculatedVaccineDay {
     parallelyVaccines;
     timeBetweenVaccines;
     totalAmountOfVaccines;
-    vaccineAppointmentRound;
-    constructor(_dateString, _dateInNumbers, _verficationDayNumber, _parallelyVaccines, _timeBetweenVaccines, _totalAmountOfVaccines, _startOfWorkingDay, _endOfWorkingDay, _vaccineAppointmentRound) {
+    vaccineAppointments;
+    constructor(_dateString, _dateInNumbers, _verficationDayNumber, _parallelyVaccines, _timeBetweenVaccines, _totalAmountOfVaccines, _startOfWorkingDay, _endOfWorkingDay, _vaccineAppointments) {
         this.date = _dateString;
         this.dateInNumbers = _dateInNumbers;
         this.verficationDayNumber = _verficationDayNumber;
@@ -30,7 +30,7 @@ class CalculatedVaccineDay {
         this.parallelyVaccines = _parallelyVaccines;
         this.timeBetweenVaccines = _timeBetweenVaccines;
         this.totalAmountOfVaccines = _totalAmountOfVaccines;
-        this.vaccineAppointmentRound = _vaccineAppointmentRound;
+        this.vaccineAppointments = _vaccineAppointments;
     }
 }
 exports.CalculatedVaccineDay = CalculatedVaccineDay;

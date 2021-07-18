@@ -1,7 +1,8 @@
 import ConsoleHandling from "./ConsoleHandling";
 import Vaccinee from "./Vaccinee";
-import { AdministratorUtils } from "./AdministratorUtils";
 import CheckOfNullDB from "./CheckOfNullDB";
+import { AdministratorUtils } from "./AdministratorUtils";
+
 
 export class Administrator {
 
@@ -26,15 +27,28 @@ export class Administrator {
     }
 
     public async showAdminMethods(): Promise<void> {
-        let answer: String = await ConsoleHandling.showPossibilities(["1. create new vaccination day",
+        let answer: string = await ConsoleHandling.showPossibilities(["1. create new vaccination day",
             "2. get specific day overview", "3. get complete statistics overview", "4. enter vaccine role", "5. quit"],
             // tslint:disable-next-line: align
             "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
         this.handleAnswer(answer);
     }
+    public async goBack(): Promise<void> {
+        let answer: String = await ConsoleHandling.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) +
+            " to quit (" + "Y".color_at_256(118) + "): ");
+        switch (answer.toLowerCase()) {
+            case "y":
+            default:
+                this.showAdminMethods();
+                break;
+            case "z":
+                ConsoleHandling.closeConsole();
+                break;
+        }
+    }
 
-    public async handleAnswer(answer: String): Promise<void> {
-        switch (answer) {
+    private async handleAnswer(_answer: string): Promise<void> {
+        switch (_answer) {
             default:
             case "1":
                 this.adminUtils.getInputForNewDayInformation();
@@ -60,7 +74,7 @@ export class Administrator {
         }
     }
 
-    public checkVaccineDB(): boolean {
+    private checkVaccineDB(): boolean {
         if (this.adminUtils.vaccineDatabase.length > 0)
             return true;
         else {
@@ -69,17 +83,5 @@ export class Administrator {
         }
     }
 
-    public async goBack(): Promise<void> {
-        let answer: String = await ConsoleHandling.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) +
-            " to quit (" + "Y".color_at_256(118) + "): ");
-        switch (answer.toLowerCase()) {
-            case "y":
-            default:
-                this.showAdminMethods();
-                break;
-            case "z":
-                ConsoleHandling.closeConsole();
-                break;
-        }
-    }
+
 }

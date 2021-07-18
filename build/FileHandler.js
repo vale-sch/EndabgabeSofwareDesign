@@ -14,17 +14,17 @@ class FileHandler {
     static getInstance() {
         return FileHandler._instance;
     }
-    readArrayFile(pathToFile) {
-        return this.readFile(pathToFile);
+    readArrayFile(_pathToFile) {
+        return this.readFile(_pathToFile);
     }
-    readObjectFile(pathToFile) {
-        return this.readFile(pathToFile);
+    readObjectFile(_pathToFile) {
+        return this.readFile(_pathToFile);
     }
-    writeFile(pathToFile, dataToWrite) {
-        fs_2.writeFileSync(path_1.resolve(__dirname, "../" + pathToFile), JSON.stringify(dataToWrite, null, 6));
+    writeFile(_pathToFile, _dataToWrite) {
+        fs_2.writeFileSync(path_1.resolve(__dirname, "../" + _pathToFile), JSON.stringify(_dataToWrite, null, 6));
     }
-    readFile(pathToFile) {
-        let jsonRaw = fs_1.readFileSync(path_1.resolve(__dirname, "../" + pathToFile));
+    readFile(_pathToFile) {
+        let jsonRaw = fs_1.readFileSync(path_1.resolve(__dirname, "../" + _pathToFile));
         let json = JSON.parse(jsonRaw.toString());
         return json;
     }

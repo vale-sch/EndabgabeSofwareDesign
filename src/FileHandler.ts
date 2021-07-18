@@ -14,20 +14,20 @@ export class FileHandler {
     public static getInstance(): FileHandler {
         return FileHandler._instance;
     }
-    public readArrayFile(pathToFile: string): Array<any> {
-        return this.readFile(pathToFile);
+    public readArrayFile(_pathToFile: string): Array<any> {
+        return this.readFile(_pathToFile);
     }
 
-    public readObjectFile(pathToFile: string): any {
-        return this.readFile(pathToFile);
+    public readObjectFile(_pathToFile: string): any {
+        return this.readFile(_pathToFile);
     }
 
-    public writeFile(pathToFile: string, dataToWrite: any): void {
-        writeFileSync(resolve(__dirname, "../" + pathToFile), JSON.stringify(dataToWrite, null, 6));
+    public writeFile(_pathToFile: string, _dataToWrite: any): void {
+        writeFileSync(resolve(__dirname, "../" + _pathToFile), JSON.stringify(_dataToWrite, null, 6));
     }
 
-    private readFile(pathToFile: string): any {
-        let jsonRaw = readFileSync(resolve(__dirname, "../" + pathToFile));
+    private readFile(_pathToFile: string): any {
+        let jsonRaw = readFileSync(resolve(__dirname, "../" + _pathToFile));
         let json: any = JSON.parse(jsonRaw.toString());
         return json;
     }

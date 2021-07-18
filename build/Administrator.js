@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Administrator = void 0;
 const ConsoleHandling_1 = require("./ConsoleHandling");
 const Vaccinee_1 = require("./Vaccinee");
-const AdministratorUtils_1 = require("./AdministratorUtils");
 const CheckOfNullDB_1 = require("./CheckOfNullDB");
+const AdministratorUtils_1 = require("./AdministratorUtils");
 class Administrator {
     adminUtils;
     async adminLogin() {
@@ -31,8 +31,21 @@ class Administrator {
         "which " + "function".color_at_256(226) + " do you want me to run? (" + "1".color_at_256(226) + "): ");
         this.handleAnswer(answer);
     }
-    async handleAnswer(answer) {
-        switch (answer) {
+    async goBack() {
+        let answer = await ConsoleHandling_1.default.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) +
+            " to quit (" + "Y".color_at_256(118) + "): ");
+        switch (answer.toLowerCase()) {
+            case "y":
+            default:
+                this.showAdminMethods();
+                break;
+            case "z":
+                ConsoleHandling_1.default.closeConsole();
+                break;
+        }
+    }
+    async handleAnswer(_answer) {
+        switch (_answer) {
             default:
             case "1":
                 this.adminUtils.getInputForNewDayInformation();
@@ -63,19 +76,6 @@ class Administrator {
         else {
             ConsoleHandling_1.default.printInput("no data in database".color_at_256(196) + " -> first you have to create a new day".color_at_256(118));
             return false;
-        }
-    }
-    async goBack() {
-        let answer = await ConsoleHandling_1.default.question("press " + "Y".color_at_256(118) + " to go back to overview, or " + "Z".color_at_256(196) +
-            " to quit (" + "Y".color_at_256(118) + "): ");
-        switch (answer.toLowerCase()) {
-            case "y":
-            default:
-                this.showAdminMethods();
-                break;
-            case "z":
-                ConsoleHandling_1.default.closeConsole();
-                break;
         }
     }
 }
