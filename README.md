@@ -19,6 +19,4 @@
 2. you have to enter login datas which will look like this(request: "whatYouHaveToType")
 3. admin: "admin"
 4. password: "password"
-
-for explanation: the admin name is "admin" and the password is "password" !!
 5. from now on follow instructions from console
