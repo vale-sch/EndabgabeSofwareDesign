@@ -170,12 +170,12 @@ class AdministratorUtils {
                 });
             });
             ConsoleHandling_1.default.printInput("");
-            ConsoleHandling_1.default.printInput("All Vaccinations in Database : " + wholeAmount.toString().color_at_256(226));
+            ConsoleHandling_1.default.printInput("all vaccinations in database : " + wholeAmount.toString().color_at_256(226));
             ConsoleHandling_1.default.printInput("");
-            ConsoleHandling_1.default.printInput("Booked Vaccination: " + ((bookedAmount / wholeAmount) * 100).toFixed(2).toString().color_at_256(196) +
+            ConsoleHandling_1.default.printInput("booked vaccination: " + ((bookedAmount / wholeAmount) * 100).toFixed(2).toString().color_at_256(196) +
                 "%".color_at_256(196));
             ConsoleHandling_1.default.printInput("");
-            ConsoleHandling_1.default.printInput("Still free Vaccination Events: " + ((stillFreeAmount / wholeAmount) * 100).toFixed(2).toString().color_at_256(118) +
+            ConsoleHandling_1.default.printInput("still free vaccination events: " + ((stillFreeAmount / wholeAmount) * 100).toFixed(2).toString().color_at_256(118) +
                 "%".color_at_256(118));
             ConsoleHandling_1.default.printInput("");
             this.showStatisticsMenu();
