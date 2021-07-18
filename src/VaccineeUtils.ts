@@ -232,11 +232,11 @@ export class VaccineeUtils {
             gmailService.sendMail(
                 _email,
                 "Vaccine Appointment on " + this.validDateReqeust,
-                "Hello from vaccineMe," + " \n\n\n " + "you have successfully booked an appointment on " + this.validDateReqeust +
-                " at " + this.validTimeRequest + ", " + " \n " + "Your Informations: " +
-                " \n\n " + "Email: " + _email + " \n " + "family name: " + familyName + " \n " + "name: " + name + " \n " + "birth: " + birth + " \n "
-                + "phone: " + phone + " \n " + "adress: " + adress + " \n " + "Your verification number: " + verficationNumber +
-                " \n\n\n " + "thank you for supporting our app, stay healthy!");
+                "Hello from vaccineMe," + "\n\n" + "you have successfully booked an appointment on " + this.validDateReqeust +
+                " at " + this.validTimeRequest + ", " + "\n\n" + "Your Informations: " +
+                " \n\n " + "Email: " + _email + "\n" + "family name: " + familyName + " \n " + "name: " + name + "\n" + "birth: " + birth + "\n"
+                + "phone: " + phone + "\n" + "adress: " + adress + "\n" + "Your verification number: " + verficationNumber +
+                "\n\n\n" + "thank you for supporting our app, stay healthy!");
             alert("you have successfully registrated to vaccine appointment, you will get an email with the important information");
 
         } else {
